@@ -3,6 +3,6 @@
 <b>Wifi based attendance for all classrooms <b>
   
 - A flutter application for streamlining the attendance marking procedure in classrooms. 
-- A fast and quick way to mark attendance by using the local wifi.
+- A fast and easy way to mark attendance by using the local wifi.
 - Developed as a project for the class CSN-291
 
