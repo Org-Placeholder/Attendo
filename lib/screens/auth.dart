@@ -33,9 +33,9 @@ class Body extends StatelessWidget {
               SizedBox(height: 5,),
               Text("WELCOME TO ATTENDO", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white), ),
               SizedBox(height: 50,),
-              SignUpSignInButton("Student Login"),
+              SignUpSignInButton("Student Login", signup),
               SizedBox(height: 10,),
-              SignUpSignInButton("Professor Login"),
+              SignUpSignInButton("Professor Login", signup),
               SizedBox(height: 150,),
             ],
           )
@@ -52,8 +52,9 @@ void signup()
 }
 
 class SignUpSignInButton extends StatelessWidget {
-  SignUpSignInButton(this.text);
+  SignUpSignInButton(this.text, this.onPress);
   final text;
+  final void Function() onPress;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
