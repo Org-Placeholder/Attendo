@@ -1,102 +1,73 @@
-import 'dart:ui';
-
+import 'constants.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-          width: double.maxFinite,
-            child: Column(
-              children: [
-                Image(image: AssetImage('assets/images/attendo-icon.png'), width: 200,),
-                SizedBox(height: 25.0,),
-                SignInButton(),
-                SizedBox(height: 10.0,),
-                SignUpButton(),
-                SizedBox(height: 50.0,),
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-            ),
+      body: Body(),
+      backgroundColor: PrimaryColor,
 
-          ),
-        backgroundColor: Colors.white,
     );
   }
 }
 
-class SignInButton extends StatelessWidget {
+class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
-      height: 50.0,
-      child: RaisedButton(
-        onPressed: () {},
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
-        padding: EdgeInsets.all(0.0),
-        child: Ink(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [Color(0xff374ABE), Color(0xff64B6FF)],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-              borderRadius: BorderRadius.circular(30.0)
+      height: size.height,
+      width: double.infinity,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+            bottom: 0,
+            child: Image.asset("assets/images/welcome-screen-design.png", width: size.width,),
           ),
-          child: Container(
-            constraints: BoxConstraints(maxWidth: 200.0, minHeight: 50.0),
-            alignment: Alignment.center,
-            child: Text(
-              "Login",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.white
-              ),
-            ),
-          ),
-        ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("assets/images/logo-white.png", width: size.width * 0.5,),
+              SizedBox(height: 5,),
+              Text("WELCOME TO ATTENDO", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white), ),
+              SizedBox(height: 50,),
+              SignUpSignInButton("Student Login"),
+              SizedBox(height: 10,),
+              SignUpSignInButton("Professor Login"),
+              SizedBox(height: 150,),
+            ],
+          )
+
+        ],
       ),
     );
   }
 }
 
-class SignUpButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50.0,
-      child: RaisedButton(
-        onPressed: () {},
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
-        padding: EdgeInsets.all(0.0),
-        child: Ink(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [Color(0xff374ABE), Color(0xff64B6FF)],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-              borderRadius: BorderRadius.circular(30.0)
-          ),
-          child: Container(
-            constraints: BoxConstraints(maxWidth: 200.0, minHeight: 50.0),
-            alignment: Alignment.center,
-            child: Text(
-              "Sign Up",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.white
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-void signin()
+void signup()
 {
   //yaba daba doo
+}
+
+class SignUpSignInButton extends StatelessWidget {
+  SignUpSignInButton(this.text);
+  final text;
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width*0.7,
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(50.0)),
+        child: FlatButton(
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          color: Colors.white,
+          child: Text(text, style: TextStyle(fontSize: 25, color: PrimaryColor),),
+          onPressed: signup,
+        ),
+      ),
+    );
+  }
 }
