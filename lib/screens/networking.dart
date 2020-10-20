@@ -44,20 +44,9 @@ class _NetScreenState extends State<NetScreen> {
         print(":}");
       }
       else{
-        var values_list = result.values.toList();
-        var key_list = result.keys.toList();
-        String serviceDeets = "";
-        for(int i = 0; i < key_list.length; i++)
-        {
-          serviceDeets += key_list[i] + " : " + values_list[i] + ", ";
-        }
-        log(serviceDeets);
-        if(result == true)
-        {
           setState(() {
-            serviceFound = serviceDeets;
+            serviceFound = result.toString();
           });
-        }
       }
     });
     

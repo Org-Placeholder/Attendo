@@ -29,23 +29,28 @@ class ServiceDiscovery
 
     // This is the type of service we're looking for :
     String type = service_name;
-    bool result;
     // Once defined, we can start the discovery :
     BonsoirDiscovery discovery = BonsoirDiscovery(type: type);
     await discovery.ready;
     await discovery.start();
-
+    var result;
     // If you want to listen to the discovery :
     discovery.eventStream.listen((event) {
       if (event.type == BonsoirDiscoveryEventType.DISCOVERY_SERVICE_RESOLVED) {
         print('Service found : ${event.service.toJson()}');
         discovery.stop();
-        return  event.service.toJson();
+        result =  event.service.toJson();
       } else if (event.type == BonsoirDiscoveryEventType.DISCOVERY_SERVICE_LOST) {
         print('Service found : ${event.service.toJson()}');
         discovery.stop();
-        return event.service.toJson();
+        result = event.service.toJson();
       }
     });
+    while(result == null)
+      {
+        await new Future.delayed(const Duration(seconds : 1));
+      }
+    print('Service found : ${result}');
+    return result;
   }
 }
