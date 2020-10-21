@@ -10,16 +10,16 @@ class Server
   //If the ip address already exists, then attendance won't be marked.
 
   //constructor will directly start server
-  Server()
+  Server(int port)
   {
-    startServer();
+    startServer(port);
   }
 
   //this will initialize the server
-  void startServer() async
+  void startServer(int port) async
   {
     //yeh loopback ke jagah anyIPv4 dalna hai kya woh dekhna hoga
-    server = await HttpServer.bind(InternetAddress.loopbackIPv4, 8083);
+    server = await HttpServer.bind(InternetAddress.loopbackIPv4, port);
     await for (HttpRequest req in server) {
       if (req.uri.path == '/ws') {
         WebSocket socket = await WebSocketTransformer.upgrade(req);
@@ -54,13 +54,18 @@ class Server
 //This will connect to the server, send the message, close the socket and return the message recieved from server
 Future <String> connect_and_send(String host, String port, String message) async
 {
-  WebSocket socket = await WebSocket.connect('ws://127.0.0.1:8083/ws');
-  socket.add('Hello, World!');
+  WebSocket socket = await WebSocket.connect('ws://' + host + ':' + port +'/ws');
+  socket.add(message);
   String result;
   await for (var data in socket) {
     print("from Server: $data");
     result = data.toString();
     socket.close();
-    return result;
   }
+  while(result == null)
+    {
+      await new Future.delayed(const Duration(seconds : 1));
+    }
+  print('Server said : ${result}');
+  return result;
 }
