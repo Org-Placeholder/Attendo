@@ -9,6 +9,10 @@ class Server
   //Also a vector of ip addresses which would be updated everytime a new student marks attendance successfully.
   //If the ip address already exists, then attendance won't be marked.
 
+
+  //Data structures for ip addresses and enrollment numbers goes here.
+
+
   //constructor will directly start server
   Server(int port)
   {
@@ -28,7 +32,8 @@ class Server
           String dataStr = data.toString();
           bool no_problem = true;
 
-          //handle string. Validation and attendance marking logic goes here.
+          //handle string.
+          //Validation and attendance marking logic goes here.
 
           if(no_problem)
             {

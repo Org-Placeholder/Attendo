@@ -10,6 +10,10 @@ class NetScreen extends StatefulWidget {
   _NetScreenState createState() => _NetScreenState();
 }
 
+
+//THIS IS A DEMO CLASS TO TEST SOCKET FUNCTIONS AND NSD. THIS WON'T MAKE ITS WAY TO THE MAIN APP.
+
+
 class _NetScreenState extends State<NetScreen> {
 
   Service serviceObj;
