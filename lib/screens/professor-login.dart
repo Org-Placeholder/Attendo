@@ -40,6 +40,7 @@ class Body extends StatelessWidget {
                   SizedBox(height: 5,),
                   Text("Hello Professor!\nWe might need your credentials!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white), textAlign: TextAlign.center, ),
                   SizedBox(height: 25,),
+
                   Container(
                     width: size.width * 0.8,
                     child: TextField(
@@ -79,7 +80,7 @@ class Body extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 40,),
-                  SignUpSignInButton("Submit", submit),
+                  SubmitButton("Submit", submit),
                   SizedBox(height: 65,),
                 ],
               )
@@ -94,8 +95,8 @@ class Body extends StatelessWidget {
 
 
 
-class SignUpSignInButton extends StatelessWidget {
-  SignUpSignInButton(this.text, this.onPress);
+class SubmitButton extends StatelessWidget {
+  SubmitButton(this.text, this.onPress);
   final text;
   final void Function() onPress;
   @override

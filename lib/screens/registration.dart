@@ -1,7 +1,7 @@
 import 'constants.dart';
 import 'package:flutter/material.dart';
 
-class StudentLoginScreen extends StatelessWidget {
+class RegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,15 +12,31 @@ class StudentLoginScreen extends StatelessWidget {
   }
 }
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  int _value = 1;
+  String error_msg = "";
   @override
   Widget build(BuildContext context) {
     final email_controller = TextEditingController();
     final password_controller = TextEditingController();
+    final confirm_password_controller = TextEditingController();
     Size size = MediaQuery.of(context).size;
     void submit()
     {
-      print("username = " + email_controller.text + " password = " + password_controller.text);
+      print("username = " + email_controller.text + " password = " + password_controller.text + " cp = " + confirm_password_controller.text + "\n");
+      if(_value == 1)
+        {
+          print("Teacher");
+        }
+      if(_value == 2)
+      {
+        print("Student");
+      }
     }
     return Container(
       height: size.height,
@@ -36,18 +52,44 @@ class Body extends StatelessWidget {
               child : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset("assets/images/logo-white.png", width: size.width * 0.5,),
                   SizedBox(height: 5,),
-                  Text("Hey mate!\nSign in to mark your\n attendance!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white), textAlign: TextAlign.center, ),
+                  Text("So, you don't have an account?\nSign up below!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white), textAlign: TextAlign.center, ),
                   SizedBox(height: 25,),
                   Container(
                     width: size.width * 0.8,
+                    decoration: BoxDecoration(
+                      color: PrimaryColor
+                    ),
+                    child: DropdownButton(
+                      style: TextStyle(color: Colors.white, fontSize: 25),
+                      dropdownColor: PrimaryColor,
+                      value: _value,
+                      items: [
+                        DropdownMenuItem(
+                          child: Text("Teacher"),
+                          value: 1,
+                        ),
+                        DropdownMenuItem(
+                          child: Text("Student"),
+                          value: 2,
+                        )
+                      ],
+                      onChanged: (value)
+                      {
+                        setState(() {
+                          _value = value;
+                        });
+                      },
+                    ),
+                  ),
+                  Container(
+                    width: size.width * 0.8,
                     child: TextField(
-                      controller: email_controller,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20.0
                       ),
+                      controller: email_controller,
                       decoration: InputDecoration(
                           fillColor: Colors.white,
                           prefixIcon: Icon(Icons.email, size: 50, color: Colors.white),
@@ -61,11 +103,11 @@ class Body extends StatelessWidget {
                   Container(
                     width: size.width * 0.8,
                     child: TextField(
-                      controller: password_controller,
                       style: TextStyle(
                           color: Colors.black54,
                           fontSize: 20.0
                       ),
+                      controller: password_controller,
                       obscureText: true,
                       enableSuggestions: false,
                       autocorrect: false,
@@ -78,6 +120,28 @@ class Body extends StatelessWidget {
                       autofillHints: [AutofillHints.email],
                     ),
                   ),
+                  SizedBox(height: 10,),
+                  Container(
+                    width: size.width * 0.8,
+                    child: TextField(
+                      style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 20.0
+                      ),
+                      controller: confirm_password_controller,
+                      obscureText: true,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          prefixIcon: Icon(Icons.work, size: 50, color: Colors.white),
+                          labelText: "Confirm password",
+                          labelStyle: TextStyle(fontWeight: FontWeight.w600, color: Colors.white60)
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Text(error_msg, style: TextStyle(color: Colors.red, fontSize: 15, fontWeight: FontWeight.w600),),
                   SizedBox(height: 40,),
                   SubmitButton("Submit", submit),
                   SizedBox(height: 65,),
@@ -89,7 +153,6 @@ class Body extends StatelessWidget {
     );
 
   }
-
 }
 
 

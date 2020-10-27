@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/auth.dart';
+import 'package:attendo/screens/registration.dart';
 void main() {
   runApp(MyApp());
 }
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: AuthScreen(),
+      home: RegistrationScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
