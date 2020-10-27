@@ -82,6 +82,7 @@ class _BodyState extends State<Body> {
                       },
                     ),
                   ),
+                  SizedBox(height: 10,),
                   Container(
                     width: size.width * 0.8,
                     child: TextField(
@@ -141,7 +142,15 @@ class _BodyState extends State<Body> {
                     ),
                   ),
                   SizedBox(height: 10,),
+                  FlatButton(
+                    color: Colors.transparent,
+                    child: Text("I have an account!", style: TextStyle(color: Colors.white60, fontSize: 17)),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
                   Text(error_msg, style: TextStyle(color: Colors.red, fontSize: 15, fontWeight: FontWeight.w600),),
+
                   SizedBox(height: 40,),
                   SubmitButton("Submit", submit),
                   SizedBox(height: 65,),

@@ -1,5 +1,6 @@
 import 'constants.dart';
 import 'package:flutter/material.dart';
+import 'package:attendo/screens/registration.dart';
 
 class ProfessorLoginScreen extends StatelessWidget {
   @override
@@ -79,8 +80,23 @@ class Body extends StatelessWidget {
                       autofillHints: [AutofillHints.email],
                     ),
                   ),
-                  SizedBox(height: 40,),
+                  SizedBox(height: 10,),
+                  FlatButton(
+                    color: Colors.transparent,
+                    child: Text("Don't have an account?", style: TextStyle(color: Colors.white60, fontSize: 17)),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationScreen()));
+                    },
+                  ),
+                  SizedBox(height: 5,),
                   SubmitButton("Submit", submit),
+                  FlatButton(
+                    color: Colors.transparent,
+                    child: Text("Are you not a teacher?", style: TextStyle(color: Colors.white, fontSize: 17)),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
                   SizedBox(height: 65,),
                 ],
               )

@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: RegistrationScreen(),
+      home: AuthScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
