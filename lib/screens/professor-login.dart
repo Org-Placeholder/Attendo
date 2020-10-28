@@ -13,15 +13,28 @@ class ProfessorLoginScreen extends StatelessWidget {
   }
 }
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  @override
+  String error_msg = "";
   Widget build(BuildContext context) {
     final email_controller = TextEditingController();
     final password_controller = TextEditingController();
+
     Size size = MediaQuery.of(context).size;
     void submit()
     {
       print("username = " + email_controller.text + " password = " + password_controller.text);
+      if(email_controller.text == "" ||  password_controller.text == "")
+      {
+        setState(() {
+          error_msg = "Please fill all the fields !";
+        });
+      }
     }
     return Container(
       height: size.height,
@@ -81,6 +94,7 @@ class Body extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 10,),
+                  Text(error_msg, style: TextStyle(color: Colors.red, fontSize: 15, fontWeight: FontWeight.w600),),
                   FlatButton(
                     color: Colors.transparent,
                     child: Text("Don't have an account?", style: TextStyle(color: Colors.white60, fontSize: 17)),
@@ -88,6 +102,7 @@ class Body extends StatelessWidget {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationScreen()));
                     },
                   ),
+
                   SizedBox(height: 5,),
                   SubmitButton("Submit", submit),
                   FlatButton(
@@ -106,7 +121,6 @@ class Body extends StatelessWidget {
     );
 
   }
-
 }
 
 

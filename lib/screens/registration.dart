@@ -20,23 +20,47 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   int _value = 1;
   String error_msg = "";
+  String full_name;
+  String email;
   @override
   Widget build(BuildContext context) {
-    final email_controller = TextEditingController();
+    final email_controller = TextEditingController(text: email);
     final password_controller = TextEditingController();
     final confirm_password_controller = TextEditingController();
+
+    final full_name_controller = TextEditingController(text: full_name);
+
+    //Do not use the string full_name and email for validation they are only for re-rendering.
     Size size = MediaQuery.of(context).size;
     void submit()
     {
-      print("username = " + email_controller.text + " password = " + password_controller.text + " cp = " + confirm_password_controller.text + "\n");
+      //auth logic will go here
+
+      print("username = " + email_controller.text + " full name = " + full_name_controller.text +" password = " + password_controller.text + " cp = " + confirm_password_controller.text + "\n");
       if(_value == 1)
         {
           print("Teacher");
         }
       if(_value == 2)
-      {
+        {
         print("Student");
-      }
+        }
+      if(email_controller.text == "" || full_name_controller.text == "" || password_controller.text == "" || confirm_password_controller.text == "")
+        {
+          setState(() {
+            email = email_controller.text;
+            full_name = full_name_controller.text;
+            error_msg = "Please fill all the fields!";
+          });
+        }
+      if(password_controller.text != confirm_password_controller.text)
+        {
+          setState(() {
+            email = email_controller.text;
+            full_name = full_name_controller.text;
+            error_msg = "Passwords don't match :(";
+          });
+        }
     }
     return Container(
       height: size.height,
@@ -105,6 +129,23 @@ class _BodyState extends State<Body> {
                     width: size.width * 0.8,
                     child: TextField(
                       style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0
+                      ),
+                      controller: full_name_controller,
+                      decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          prefixIcon: Icon(Icons.account_circle, size: 50, color: Colors.white),
+                          labelText: "Full name",
+                          labelStyle: TextStyle(fontWeight: FontWeight.w600, color: Colors.white60)
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    width: size.width * 0.8,
+                    child: TextField(
+                      style: TextStyle(
                           color: Colors.black54,
                           fontSize: 20.0
                       ),
@@ -118,7 +159,6 @@ class _BodyState extends State<Body> {
                           labelText: "Password",
                           labelStyle: TextStyle(fontWeight: FontWeight.w600, color: Colors.white60)
                       ),
-                      autofillHints: [AutofillHints.email],
                     ),
                   ),
                   SizedBox(height: 10,),
