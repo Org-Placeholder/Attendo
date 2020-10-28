@@ -105,7 +105,7 @@ class _BodyState extends State<Body> {
                   SubmitButton("Submit", submit),
                   FlatButton(
                     color: Colors.transparent,
-                    child: Text("Are you not a student", style: TextStyle(color: Colors.white, fontSize: 17)),
+                    child: Text("Are you not a student?", style: TextStyle(color: Colors.white, fontSize: 17)),
                     onPressed: () {
                       Navigator.pop(context);
                     },
