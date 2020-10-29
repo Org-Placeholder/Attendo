@@ -5,12 +5,8 @@ class Server
   //server is declared here so that we can close it as per need.
   HttpServer server;
 
-  //declare some map or some vector for storing the enrollment numbers of students who marked attendance.
-  //Also a vector of ip addresses which would be updated everytime a new student marks attendance successfully.
-  //If the ip address already exists, then attendance won't be marked.
-
-
-  //Data structures for ip addresses and enrollment numbers goes here.
+  List<String> students; // Stores enrollment numbers of students who marked their attendance
+  List<String> ipAddresses; // Stores IPv4 addresses from which attendance has been marked
 
 
   //constructor will directly start server
@@ -30,13 +26,18 @@ class Server
         socket.listen((data) {
           print("from IP ${req.connectionInfo.remoteAddress.address}:${data}");
           String dataStr = data.toString();
-          bool no_problem = true;
+          bool noProblem = true;
+          String address = req.connectionInfo.remoteAddress.address;
 
-          //handle string.
-          //Validation and attendance marking logic goes here.
+          //Verify that attendance from this address has not been marked previously
+          noProblem = ipAddresses.every((ip) => ip != address);
 
-          if(no_problem)
+          //if attendance has not been marked from address
+          if(noProblem)
             {
+              //Add address to the list of addresses so far, and mark student present
+              ipAddresses.add(address);
+              students.add(dataStr);
               socket.add("OK");
             }
           else
