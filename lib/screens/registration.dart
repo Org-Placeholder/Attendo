@@ -67,7 +67,7 @@ class _BodyState extends State<Body> {
             error_msg = "Passwords don't match :(";
           });
         }
-      if(!iserror)
+      if(!iserror) // if no error found
          {
            dynamic result = await _auth.registerWithEmailAndPassword(email_controller.text, password_controller.text);
            if(result == null)
@@ -77,7 +77,7 @@ class _BodyState extends State<Body> {
                  });
                }
            else{
-             print("Registered");
+             print("Registered"); // implies data registerd on firebase
            }
          }
     }

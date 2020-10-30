@@ -38,7 +38,7 @@ class _BodyState extends State<Body> {
           error_msg = "Please fill all the fields !";
         });
       }
-     else{
+     else{ // keeping the student and professor login same for now.
        dynamic result=await _auth.signInWithEmailAndPassword(email_controller.text, password_controller.text);
        if(result==null)
           {

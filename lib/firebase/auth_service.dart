@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:attendo/models/user.dart';
-class AuthService{
+class AuthService{ // class for handling all firebase related queries
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
    // function to create a user obj based in Firebase obj containing userid(uid)
  NewUser _userFromFirebase(User user){
        return user!=null? NewUser(uid:user.uid):null;
  }
-
- Stream<NewUser> get user{
+ // convert stream of User obj to Newuser obj
+ Stream<NewUser> get user{ // needed for detenmining whether user is signed in or not
    return _auth.authStateChanges().map((User user) => _userFromFirebase(user));
  }
   // register with email and password
@@ -39,5 +39,13 @@ class AuthService{
       return null;
     }
   }
-  // sign out
+  // sign out function
+   Future signout() async {  // to be implemented after screens are made
+    try{
+       return await _auth.signOut(); // await _auth.signOut() => to be called for logout.
+    }catch(e){
+      print(e.toString());
+      return null;
+    }
+   }
 }

@@ -23,7 +23,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   @override
-  final AuthService _auth = AuthService();
+  final AuthService _auth = AuthService(); // authservice object for making firebase queries
   String error_msg = "";
   Widget build(BuildContext context) {
     final email_controller = TextEditingController();
@@ -39,14 +39,14 @@ class _BodyState extends State<Body> {
       }
      else{
         dynamic result=await _auth.signInWithEmailAndPassword(email_controller.text, password_controller.text);
-        if(result==null)
+        if(result==null) // login error
         {
           setState(() {
             error_msg = " Wrong Credentials, couldn't sign you in .";
           });
         }
         else{
-          print("Sucessfully Signed in.");
+          print("Sucessfully Signed in."); // printing message just for now, screen should appear
         }
       }
     }

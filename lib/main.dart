@@ -4,7 +4,7 @@ import 'package:attendo/screens/registration.dart';
 import 'package:firebase_core/firebase_core.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(); // initialize the app when main loads (for latest versions)
   runApp(MyApp());
 }
 
