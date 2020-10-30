@@ -1,3 +1,5 @@
+import 'package:attendo/firebase/auth_service.dart';
+
 import 'constants.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +24,8 @@ class _BodyState extends State<Body> {
   String error_msg = "";
   String full_name;
   String email;
+  final AuthService _auth = AuthService();
+  
   @override
   Widget build(BuildContext context) {
     final email_controller = TextEditingController(text: email);
@@ -32,10 +36,10 @@ class _BodyState extends State<Body> {
 
     //Do not use the string full_name and email for validation they are only for re-rendering.
     Size size = MediaQuery.of(context).size;
-    void submit()
+    void submit() async
     {
       //auth logic will go here
-
+      bool iserror=false;
       print("username = " + email_controller.text + " full name = " + full_name_controller.text +" password = " + password_controller.text + " cp = " + confirm_password_controller.text + "\n");
       if(_value == 1)
         {
@@ -47,6 +51,7 @@ class _BodyState extends State<Body> {
         }
       if(email_controller.text == "" || full_name_controller.text == "" || password_controller.text == "" || confirm_password_controller.text == "")
         {
+          iserror=true;
           setState(() {
             email = email_controller.text;
             full_name = full_name_controller.text;
@@ -55,12 +60,26 @@ class _BodyState extends State<Body> {
         }
       if(password_controller.text != confirm_password_controller.text)
         {
+          iserror=true;
           setState(() {
             email = email_controller.text;
             full_name = full_name_controller.text;
             error_msg = "Passwords don't match :(";
           });
         }
+      if(!iserror)
+         {
+           dynamic result = await _auth.registerWithEmailAndPassword(email_controller.text, password_controller.text);
+           if(result == null)
+               {
+                 setState(() {
+                   error_msg="Registration was not sucessful :(";
+                 });
+               }
+           else{
+             print("Registered");
+           }
+         }
     }
     return Container(
       height: size.height,
