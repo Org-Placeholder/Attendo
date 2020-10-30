@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/auth.dart';
-import 'package:attendo/screens/registration.dart';
 void main() {
   runApp(MyApp());
 }

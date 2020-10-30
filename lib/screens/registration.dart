@@ -183,7 +183,7 @@ class _BodyState extends State<Body> {
                   ),
                   SizedBox(height: 10,),
                   FlatButton(
-                    color: Colors.transparent,
+                    color: Colors.white,
                     child: Text("I have an account!", style: TextStyle(color: Colors.white60, fontSize: 17)),
                     onPressed: () {
                       Navigator.pop(context);
@@ -219,7 +219,7 @@ class SubmitButton extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(50.0)),
         child: FlatButton(
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-          color: Colors.white,
+          color: Colors.transparent,
           child: Text(text, style: TextStyle(fontSize: 25, color: PrimaryColor),),
           onPressed: onPress,
         ),
