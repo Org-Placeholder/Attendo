@@ -11,7 +11,7 @@ class AuthService{
  Stream<NewUser> get user{
    return _auth.authStateChanges().map((User user) => _userFromFirebase(user));
  }
-  // sign-in with email and password
+  // register with email and password
   Future registerWithEmailAndPassword(String email,String password) async
   {
     try
@@ -25,7 +25,19 @@ class AuthService{
               return null;
           }
   }
-  // register with email and password
-
+  //  sign-in with email and password
+  Future signInWithEmailAndPassword(String email,String password) async
+  {
+    try
+    {
+      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      User user=result.user;
+      return _userFromFirebase(user);
+    }catch(e)
+    {
+      print(e.toString());
+      return null;
+    }
+  }
   // sign out
 }

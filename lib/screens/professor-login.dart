@@ -1,3 +1,5 @@
+import 'package:attendo/firebase/auth_service.dart';
+
 import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/registration.dart';
@@ -19,6 +21,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  final AuthService _auth= AuthService();
   @override
   String error_msg = "";
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class _BodyState extends State<Body> {
     final password_controller = TextEditingController();
 
     Size size = MediaQuery.of(context).size;
-    void submit()
+    void submit() async
     {
       print("username = " + email_controller.text + " password = " + password_controller.text);
       if(email_controller.text == "" ||  password_controller.text == "")
@@ -35,6 +38,18 @@ class _BodyState extends State<Body> {
           error_msg = "Please fill all the fields !";
         });
       }
+     else{
+       dynamic result=await _auth.signInWithEmailAndPassword(email_controller.text, password_controller.text);
+       if(result==null)
+          {
+            setState(() {
+              error_msg = " Wrong Credentials, couldn't sign you in .";
+            });
+          }
+       else{
+         print("Sucessfully Signed in.");
+       }
+     }
     }
     return Container(
       height: size.height,
