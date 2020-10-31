@@ -1,5 +1,5 @@
 import 'package:attendo/screens/registration.dart';
-import 'package:attendo/screens/ShowCardsStudents.dart';
+import 'package:attendo/screens/student-home-page.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
 
@@ -33,6 +33,7 @@ class _BodyState extends State<Body> {
         setState(() {
           error_msg = "Please fill all the fields !";
         });
+        Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesforStudents()));
       }
     }
     return Container(
@@ -106,7 +107,7 @@ class _BodyState extends State<Body> {
                     color: Colors.transparent,
                     child: Text("Are you not a student?", style: TextStyle(color: Colors.white, fontSize: 17)),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationScreen()));
+                      Navigator.pop(context);
                     },
                   ),
                   SizedBox(height: 65,),
@@ -137,9 +138,7 @@ class SubmitButton extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           color: Colors.white,
           child: Text(text, style: TextStyle(fontSize: 25, color: PrimaryColor),),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ClassesforStudents()));
-          }
+          onPressed: onPress
         ),
       ),
     );
