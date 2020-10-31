@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/auth.dart';
 import 'package:attendo/screens/constants.dart';
-import 'package:attendo/screens/networking.dart';
 void main() {
   runApp(MyApp());
 }
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: NetScreen(),
+      home: AuthScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
