@@ -46,6 +46,15 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
     'Object Oriented Design and Analysis' ,'Data Structures and Laboratory' , 'Computer Architecture' , 'Signals and Sytems' , 'ThermoDynamics' , 'Economics'
   ];
 
+  var ImageURL = [
+    "https://picsum.photos/id/237/200/300",
+    "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
+    "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
+    "https://picsum.photos/id/237/200/300",
+    "https://picsum.photos/id/237/200/300",
+    "https://picsum.photos/id/237/200/300"
+  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +95,7 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                               child : CircleAvatar (
                                 backgroundColor: PrimaryColor,
                                 foregroundColor: LightColor,
-                                backgroundImage: NetworkImage("https://picsum.photos/id/237/200/300"),
+                                backgroundImage: NetworkImage(ImageURL[index]),
                                 ),
                               ),
                               SizedBox(width : 10),
