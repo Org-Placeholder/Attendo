@@ -83,10 +83,15 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(Enrollment[index], style: TextStyle(
-                  fontSize: 15
+                  fontSize: 20
                 ),),
+                SizedBox(width: 10,),
+                Text("-", style: TextStyle(
+                    fontSize: 20
+                ),),
+                SizedBox(width: 10,),
                 Text( "Done",style: TextStyle(
-                    color: Colors.green,fontSize: 15),),
+                    color: Colors.green,fontSize: 20),),
               ],
             );
             return ListTile(
