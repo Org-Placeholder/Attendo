@@ -35,7 +35,7 @@ class _BodyState extends State<Body> {
         setState(() {
           error_msg = "Please fill all the fields !";
         });
-       // Navigator.push(context, MaterialPageRoute(builder: (context) => ShowCoursesProfessor()));  //error @angad-K
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ShowCoursesProfessor()));
       }
     }
     return Container(

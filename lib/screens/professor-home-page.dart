@@ -1,4 +1,5 @@
-import 'package:attendo/screens/DialogAddCourse.dart';
+import 'package:attendo/screens/add-course-dialogbox.dart';
+import 'package:attendo/screens/prof-student-common-drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 
@@ -25,23 +26,10 @@ class _ShowCoursesProfessorState extends State<ShowCoursesProfessor> with Single
         toolbarHeight: 100,
         title: Text("Your Courses"),
       ),
-      drawer: new Drawer(
-        child: Center(
-          child: ListView(
-            children: <Widget>[
-              new UserAccountsDrawerHeader(
-                decoration: new BoxDecoration(
-                  color: PrimaryColor,
-                ),
-                accountName: Text("Sandeep Kumar", textAlign: TextAlign.center,),
-                accountEmail: Text("sandeep.garg@cs.iitr.ac.in", textAlign: TextAlign.center,),
-                currentAccountPicture: new CircleAvatar(
-                  backgroundImage: new NetworkImage("https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg"),
-                ),
-              )
-            ],
-          )
-        ),
+      drawer: account_drawer(
+        Name: "Sandeep Kumar",
+        Email: "sandeep.garg@cs.iitr.ac.in",
+        ImageURL: "https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
       ),
 
       body:  TabBarView(
@@ -82,8 +70,9 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
       'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'
     ];
     bool TappedYes = false;
-    TextField CourseCodeField;
-    TextField CourseNameField;
+    final course_name_controller = TextEditingController();
+    final course_code_controller = TextEditingController();
+    final course_image_controller = TextEditingController();
     return Scaffold(
       backgroundColor:PrimaryColor,
       body :
@@ -147,8 +136,19 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
             ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          final action =DialogProfessor.yesAbortDialogue(context, 'Add Course', CourseCodeField, CourseNameField);
+        onPressed: () async {
+          final action =  await DialogProfessor.addCourseDialog(context, 'Add Course', course_name_controller, course_code_controller, course_image_controller);
+          if(action == DialogAction.add)
+            {
+              if(course_image_controller.text == "")
+                {
+                  course_image_controller.text = "https://picsum.photos/id/237/200/300";
+                }
+              print("Course Name = " + course_name_controller.text + " Course code = " + course_code_controller.text + " Course image = " + course_image_controller.text);
+            }
+          course_image_controller.text = "";
+          course_code_controller.text = "";
+          course_name_controller.text = "";
         },
         backgroundColor: PrimaryColor,
           child: Icon(Icons.add,),

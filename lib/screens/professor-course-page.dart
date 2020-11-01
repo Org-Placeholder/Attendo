@@ -1,3 +1,4 @@
+import 'package:attendo/screens/prof-student-common-drawer.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'constants.dart';
@@ -46,25 +47,11 @@ class _MarkAttendanceProfessor extends State<MarkAttendanceProfessor> with Singl
         toolbarHeight: 100,
         title: Text("Your Courses"),
       ),
-      drawer: new Drawer(
-        child: Center(
-            child: ListView(
-              children: <Widget>[
-                new UserAccountsDrawerHeader(
-                  decoration: new BoxDecoration(
-                    color: PrimaryColor,
-                  ),
-                  accountName: Text("Sandeep Kumar", textAlign: TextAlign.center,),
-                  accountEmail: Text("sandeep.garg@cs.iitr.ac.in", textAlign: TextAlign.center,),
-                  currentAccountPicture: new CircleAvatar(
-                    backgroundImage: new NetworkImage("https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg"),
-                  ),
-                )
-              ],
-            )
-        ),
+      drawer: account_drawer(
+        Name: "Sandeep Kumar",
+        Email: "sandeep.garg@cs.iitr.ac.in",
+        ImageURL: "https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
       ),
-
       body:  TabBarView(
         controller: controller,
         children: <Widget>[
