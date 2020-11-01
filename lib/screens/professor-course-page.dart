@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'constants.dart';
 import 'package:flutter/material.dart';
+import 'package:attendo/screens/Manual-Attendance-Dialog.dart';
 
 // class MarkAttendanceProfessor extends StatelessWidget{
 //   final String courseCode;
@@ -72,6 +73,7 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
   ];
   @override
   Widget build(BuildContext context) {
+    final enrolment_number_controller = TextEditingController();
     return Scaffold(
       body: ListView.builder(
 
@@ -98,8 +100,8 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // final action =DialogProfessor.yesAbortDialogue(context, 'Add Course', CourseCodeField, CourseNameField);
-          //yet to be implemented
+           final action =AddManualAttendance.AddCancelDialogue(context, 'Add Attendee', enrolment_number_controller);
+            //yet to be implemented
         },
         backgroundColor: PrimaryColor,
         child: Icon(Icons.add,),
