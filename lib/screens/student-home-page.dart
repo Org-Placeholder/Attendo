@@ -31,7 +31,7 @@ class _CoursesforStudentsState extends State<CoursesforStudents> with SingleTick
         ],
       ),
       drawer: account_drawer(
-        Name: "Angad Kambli",
+        Name: "Angad Kambli" +", " + "19114041" ,//Angad kambli ke jagah naam aur 1911.. ke jagah uid aayega
         Email: "kambli_a@yabadabadooooooooo.com",
         ImageURL: "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
       ),
