@@ -2,7 +2,7 @@ import 'package:attendo/screens/prof-student-common-drawer.dart';
 import 'package:attendo/screens/showDialogSuccess.dart';
 import 'package:attendo/screens/student-course-page.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:attendo/screens/ShowDialogFailure.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
 class CoursesforStudents extends StatefulWidget {
@@ -88,7 +88,8 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                       FlatButton(
                         onPressed: () {
                           //Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceStudents(courseName: CourseName[index],)));
-                          final action  = showAttendanceMarked.ConfirmDialog(context, 'Marked!', ClassStudent[index]);
+                          //final action  = showAttendanceMarkedSuccess.ConfirmDialog(context, 'Marked!', ClassStudent[index]);
+                          final action  = showAttendanceMarkedFailure.ConfirmDialog(context, 'Marked!', ClassStudent[index]);
                           //change accordingly
                         },
                         child: Row(
