@@ -88,8 +88,8 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                       FlatButton(
                         onPressed: () {
                           //Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceStudents(courseName: CourseName[index],)));
-                          //final action  = showAttendanceMarkedSuccess.ConfirmDialog(context, 'Marked!', ClassStudent[index]);
-                          final action  = showAttendanceMarkedFailure.ConfirmDialog(context, 'Marked!', ClassStudent[index]);
+                          final action  = showAttendanceMarkedSuccess.ConfirmDialog(context, 'Marked!', ClassStudent[index]); //Success
+                          //final action  = showAttendanceMarkedFailure.ConfirmDialog(context, 'Marked!', ClassStudent[index]); //Failure
                           //change accordingly
                         },
                         child: Row(
