@@ -94,11 +94,6 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
                     color: Colors.green,fontSize: 20),),
               ],
             );
-            return ListTile(
-              trailing: Text("Done",style: TextStyle(
-                  color: Colors.green,fontSize: 15),),
-                title:Text(Enrollment[index],)
-            );
           }
       ),
       floatingActionButton: FloatingActionButton(
