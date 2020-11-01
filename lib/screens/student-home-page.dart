@@ -1,4 +1,5 @@
 import 'package:attendo/screens/prof-student-common-drawer.dart';
+import 'package:attendo/screens/showDialogSuccess.dart';
 import 'package:attendo/screens/student-course-page.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -44,7 +45,6 @@ class BuildStudentCourseCards extends StatefulWidget {
 }
 
 class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
-
   var ClassStudent = [
     'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'
   ];
@@ -60,7 +60,6 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
     "https://picsum.photos/id/237/200/300",
     "https://picsum.photos/id/237/200/300"
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +87,9 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                       children: <Widget>[
                       FlatButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceStudents(courseName: CourseName[index],)));
+                          //Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceStudents(courseName: CourseName[index],)));
+                          final action  = showAttendanceMarked.ConfirmDialog(context, 'Marked!', ClassStudent[index]);
+                          //change accordingly
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -112,7 +113,6 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                                   // Text(CourseName[index], style : TextStyle(color: Colors.grey, fontSize: 13.0, fontWeight: FontWeight.bold,  )),
                                   Text(ClassStudent[index], style : TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.bold), textAlign: TextAlign.start,),
                                   //Text(CourseName[index], style : TextStyle(color: Colors.grey, fontSize: 13.0, fontWeight: FontWeight.bold,  )),
-
                                   Text(CourseName[index], style : TextStyle(color: Colors.grey, fontSize: 13.0, fontWeight: FontWeight.bold), textAlign: TextAlign.end ,),
                                 ],
                               )
