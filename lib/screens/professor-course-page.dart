@@ -74,12 +74,25 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
+
           itemCount: Enrollment.length,
           itemBuilder: (BuildContext context,int index){
-            return ListTile(
-              trailing: Text("Done",style: TextStyle(
-                  color: Colors.green,fontSize: 15),),
-                title:Text(Enrollment[index],)
+            return Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(Enrollment[index], style: TextStyle(
+                  fontSize: 20
+                ),),
+                SizedBox(width: 10,),
+                Text("-", style: TextStyle(
+                    fontSize: 20
+                ),),
+                SizedBox(width: 10,),
+                Text( "Done",style: TextStyle(
+                    color: Colors.green,fontSize: 20),),
+              ],
             );
           }
       ),
