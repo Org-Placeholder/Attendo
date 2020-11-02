@@ -1,7 +1,11 @@
 import 'package:attendo/screens/professor-home-page.dart';
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/auth.dart';
-void main() {
+import 'package:attendo/screens/registration.dart';
+import 'package:firebase_core/firebase_core.dart';
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // initialize the app when main loads (for latest versions)
   runApp(MyApp());
 }
 

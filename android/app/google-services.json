@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1077913377712",
+    "firebase_url": "https://attendo-e663a.firebaseio.com",
+    "project_id": "attendo-e663a",
+    "storage_bucket": "attendo-e663a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077913377712:android:fec39049c1e849e4165475",
+        "android_client_info": {
+          "package_name": "com.app.attendo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077913377712-etqpqg2jprj7ukhakpfkca08s3f713um.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARZ92Tyhb0kDrLEp4a6eVUPju6swWIP5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077913377712-etqpqg2jprj7ukhakpfkca08s3f713um.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
