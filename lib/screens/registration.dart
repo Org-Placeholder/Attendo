@@ -69,7 +69,7 @@ class _BodyState extends State<Body> {
         }
       if(!iserror) // if no error found
          {
-           dynamic result = await _auth.registerWithEmailAndPassword(email_controller.text, password_controller.text);
+           dynamic result = await _auth.registerWithEmailAndPassword(email_controller.text, password_controller.text,full_name_controller.text,_value);
            if(result == null)
                {
                  setState(() {

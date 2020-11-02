@@ -1,3 +1,4 @@
+import 'package:attendo/firebase/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:attendo/models/user.dart';
 class AuthService{ // class for handling all firebase related queries
@@ -8,16 +9,18 @@ class AuthService{ // class for handling all firebase related queries
        return user!=null? NewUser(uid:user.uid):null;
  }
  // convert stream of User obj to Newuser obj
- Stream<NewUser> get user{ // needed for detenmining whether user is signed in or not
+ Stream<NewUser> get user{ // needed for determining whether user is signed in or not
    return _auth.authStateChanges().map((User user) => _userFromFirebase(user));
  }
   // register with email and password
-  Future registerWithEmailAndPassword(String email,String password) async
+  Future registerWithEmailAndPassword(String email,String password,String name,int type) async
   {
     try
         {
           UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
           User user=result.user;
+          // adding the new user to the database
+          await DatabaseService(uid: user.uid).addUser(name, type,user.uid);
           return _userFromFirebase(user);
         }catch(e)
           {
