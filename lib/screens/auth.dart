@@ -1,7 +1,8 @@
-import 'constants.dart';
-import 'package:flutter/material.dart';
 import 'package:attendo/screens/professor-login.dart';
 import 'package:attendo/screens/student-login.dart';
+import 'package:flutter/material.dart';
+
+import 'constants.dart';
 
 class AuthScreen extends StatelessWidget {
   @override

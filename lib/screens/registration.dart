@@ -25,13 +25,13 @@ class _BodyState extends State<Body> {
   String full_name;
   String email;
   final AuthService _auth = AuthService();
-  
+  String unique_identification;
   @override
   Widget build(BuildContext context) {
     final email_controller = TextEditingController(text: email);
     final password_controller = TextEditingController();
     final confirm_password_controller = TextEditingController();
-
+    final id_controller = TextEditingController(text: unique_identification);
     final full_name_controller = TextEditingController(text: full_name);
 
     //Do not use the string full_name and email for validation they are only for re-rendering.
@@ -40,6 +40,7 @@ class _BodyState extends State<Body> {
     {
       //auth logic will go here
       bool iserror=false;
+      print("unique id = " + id_controller.text);
       print("username = " + email_controller.text + " full name = " + full_name_controller.text +" password = " + password_controller.text + " cp = " + confirm_password_controller.text + "\n");
       if(_value == 1)
         {
@@ -96,7 +97,7 @@ class _BodyState extends State<Body> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: 5,),
-                  Text("So, you don't have an account?\nSign up below!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white), textAlign: TextAlign.center, ),
+                  Text("So, you don't have an account?\nSign up below!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white), textAlign: TextAlign.center, ),
                   SizedBox(height: 25,),
                   Container(
                     width: size.width * 0.8,
@@ -165,6 +166,23 @@ class _BodyState extends State<Body> {
                     width: size.width * 0.8,
                     child: TextField(
                       style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0
+                      ),
+                      controller: id_controller,
+                      decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          prefixIcon: Icon(Icons.account_circle, size: 50, color: Colors.white),
+                          labelText: "Unique ID",
+                          labelStyle: TextStyle(fontWeight: FontWeight.w600, color: Colors.white60)
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    width: size.width * 0.8,
+                    child: TextField(
+                      style: TextStyle(
                           color: Colors.black54,
                           fontSize: 20.0
                       ),
@@ -209,8 +227,6 @@ class _BodyState extends State<Body> {
                     },
                   ),
                   Text(error_msg, style: TextStyle(color: Colors.red, fontSize: 15, fontWeight: FontWeight.w600),),
-
-                  SizedBox(height: 40,),
                   SubmitButton("Submit", submit),
                   SizedBox(height: 65,),
                 ],

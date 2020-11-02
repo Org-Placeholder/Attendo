@@ -1,5 +1,5 @@
 import 'package:attendo/firebase/auth_service.dart';
-
+import 'package:attendo/screens/professor-home-page.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/registration.dart';
@@ -37,6 +37,7 @@ class _BodyState extends State<Body> {
         setState(() {
           error_msg = "Please fill all the fields !";
         });
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ShowCoursesProfessor()));
       }
      else{ // keeping the student and professor login same for now.
        dynamic result=await _auth.signInWithEmailAndPassword(email_controller.text, password_controller.text);
@@ -155,7 +156,7 @@ class SubmitButton extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           color: Colors.white,
           child: Text(text, style: TextStyle(fontSize: 25, color: PrimaryColor),),
-          onPressed: onPress,
+          onPressed: onPress
         ),
       ),
     );
