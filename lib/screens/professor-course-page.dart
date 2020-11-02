@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'constants.dart';
 import 'package:flutter/material.dart';
+import 'package:attendo/screens/modify-attendance-manually.dart';
 
 // class MarkAttendanceProfessor extends StatelessWidget{
 //   final String courseCode;
@@ -72,34 +73,30 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
   ];
   @override
   Widget build(BuildContext context) {
+    final enrolment_number_controller = TextEditingController();
     return Scaffold(
       body: ListView.builder(
-
           itemCount: Enrollment.length,
           itemBuilder: (BuildContext context,int index){
-            return Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(Enrollment[index], style: TextStyle(
-                  fontSize: 20
-                ),),
-                SizedBox(width: 10,),
-                Text("-", style: TextStyle(
-                    fontSize: 20
-                ),),
-                SizedBox(width: 10,),
-                Text( "Done",style: TextStyle(
-                    color: Colors.green,fontSize: 20),),
-              ],
+            return ListTile(
+                trailing: Text("Done",style: TextStyle(
+                    color: Colors.green,fontSize: 15),),
+                title:Text(Enrollment[index],)
             );
           }
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // final action =DialogProfessor.yesAbortDialogue(context, 'Add Course', CourseCodeField, CourseNameField);
-          //yet to be implemented
+        onPressed: () async {
+           final action = await AddManualAttendance.AddCancelDialogue(context, 'Add Attendee', enrolment_number_controller);
+           if(action == DialogAction.add)
+             {
+               print("reached");
+               //Enrollment.add(enrolment_number_controller.text);
+               setState(() {
+                 Enrollment.add(enrolment_number_controller.text);
+               });
+             }
+           enrolment_number_controller.text = "";
         },
         backgroundColor: PrimaryColor,
         child: Icon(Icons.add,),
