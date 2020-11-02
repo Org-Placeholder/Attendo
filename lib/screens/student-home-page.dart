@@ -1,8 +1,8 @@
 import 'package:attendo/screens/prof-student-common-drawer.dart';
-import 'package:attendo/screens/showDialogSuccess.dart';
+import 'package:attendo/screens/success-dialog.dart';
 import 'package:attendo/screens/student-course-page.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:attendo/screens/ShowDialogFailure.dart';
+import 'package:attendo/screens/failure-dialog.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
 class CoursesforStudents extends StatefulWidget {

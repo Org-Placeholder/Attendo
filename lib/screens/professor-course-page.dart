@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'constants.dart';
 import 'package:flutter/material.dart';
-import 'package:attendo/screens/Manual-Attendance-Dialog.dart';
+import 'package:attendo/screens/modify-attendance-manually.dart';
 
 // class MarkAttendanceProfessor extends StatelessWidget{
 //   final String courseCode;

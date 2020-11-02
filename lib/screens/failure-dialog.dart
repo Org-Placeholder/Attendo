@@ -3,13 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum DialogAction{Confirm}
-final Image DialogTitleimage = new Image (
-  image : new ExactAssetImage('assets/images/TickMark.png'),
-  height: 10,
-  width: 28,
-);
 // ignore: camel_case_types
-class showAttendanceMarkedSuccess{
+class showAttendanceMarkedFailure{
   // ignore: non_constant_identifier_names
   static Future<DialogAction> ConfirmDialog(
       BuildContext context,
@@ -24,8 +19,8 @@ class showAttendanceMarkedSuccess{
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              title: DialogTitleimage,
-              content: Text("AhhhhTendo! You have Successfully marked your Attendance for \n" + courseName , style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+              title: Icon(Icons.close, size: 40, color: Colors.red,),
+              content: Text("Oops! The system could not register your call for " + courseName + "\nPlease Try Again :(", style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
               actions: <Widget>[
                 RaisedButton(
                     onPressed: () => Navigator.of(context).pop(DialogAction.Confirm),
