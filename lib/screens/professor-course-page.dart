@@ -86,9 +86,17 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
           }
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-           final action =AddManualAttendance.AddCancelDialogue(context, 'Add Attendee', enrolment_number_controller);
-            //yet to be implemented
+        onPressed: () async {
+           final action = await AddManualAttendance.AddCancelDialogue(context, 'Add Attendee', enrolment_number_controller);
+           if(action == DialogAction.add)
+             {
+               print("reached");
+               //Enrollment.add(enrolment_number_controller.text);
+               setState(() {
+                 Enrollment.add(enrolment_number_controller.text);
+               });
+             }
+           enrolment_number_controller.text = "";
         },
         backgroundColor: PrimaryColor,
         child: Icon(Icons.add,),
