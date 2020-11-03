@@ -51,6 +51,7 @@ class ServiceDiscovery
     int time_elapsed = 0;
     while(result == null && time_elapsed<= wait_time) {
       await new Future.delayed(const Duration(seconds : 1));
+      time_elapsed++;
     }
     if(result == null) {
         print("Service not found");
