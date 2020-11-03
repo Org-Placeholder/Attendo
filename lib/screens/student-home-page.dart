@@ -1,3 +1,5 @@
+import 'package:attendo/networking/networkservicediscovery.dart';
+import 'package:attendo/networking/socket.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
 import 'package:attendo/screens/success-dialog.dart';
 import 'package:attendo/screens/student-course-page.dart';
@@ -86,11 +88,29 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                       FlatButton(
-                        onPressed: () {
+                        onPressed: () async {
                           //Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceStudents(courseName: CourseName[index],)));
-                          final action  = showAttendanceMarkedSuccess.ConfirmDialog(context, 'Marked!', ClassStudent[index]); //Success
-                          //final action  = showAttendanceMarkedFailure.ConfirmDialog(context, 'Marked!', ClassStudent[index]); //Failure
-                          //change accordingly
+
+                          String serviceName = "_"+ClassStudent[index]+"._tcp",enrollment_num = '19114001';
+                          ServiceDiscovery nsd = new ServiceDiscovery();
+
+                          var nsdResult = await nsd.discoverServices(serviceName);
+                          var serverMessage = "ok";
+                          if(nsdResult == null){
+                            serverMessage = "Error";
+                          }
+                          var host = nsdResult['host'],port = nsdResult['port'];
+
+                          if(serverMessage == "ok") {
+                            serverMessage = await connect_and_send(host, port, enrollment_num);
+                          }
+
+                          if(serverMessage == 'ok') {
+                            showAttendanceMarkedSuccess.ConfirmDialog(context, 'Marked!', ClassStudent[index]);
+                          } else {
+                            showAttendanceMarkedFailure.ConfirmDialog(context, 'Marked!', ClassStudent[index]);
+                          }
+
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

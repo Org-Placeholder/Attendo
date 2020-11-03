@@ -24,6 +24,8 @@ class Service
 
 class ServiceDiscovery
 {
+  int wait_time = 5;
+  //Implementation needs to be modified to terminate after wait_time seconds if service isn't discovered
   Future < Map <String, dynamic> > discoverServices(String service_name) async
   {
 
@@ -31,9 +33,9 @@ class ServiceDiscovery
     String type = service_name;
     // Once defined, we can start the discovery :
     BonsoirDiscovery discovery = BonsoirDiscovery(type: type);
+    var result;
     await discovery.ready;
     await discovery.start();
-    var result;
     // If you want to listen to the discovery :
     discovery.eventStream.listen((event) {
       if (event.type == BonsoirDiscoveryEventType.DISCOVERY_SERVICE_RESOLVED) {
@@ -46,11 +48,16 @@ class ServiceDiscovery
         result = event.service.toJson();
       }
     });
-    while(result == null)
-      {
-        await new Future.delayed(const Duration(seconds : 1));
-      }
-    print('Service found : ${result}');
+    int time_elapsed = 0;
+    while(result == null && time_elapsed<= wait_time) {
+      await new Future.delayed(const Duration(seconds : 1));
+    }
+    if(result == null) {
+        print("Service not found");
+        discovery.stop();
+    } else {
+      print('Service found : ${result}');
+    }
     return result;
   }
 }

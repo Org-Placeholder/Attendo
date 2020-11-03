@@ -4,7 +4,6 @@ class Server
 {
   //server is declared here so that we can close it as per need.
   HttpServer server;
-
   List<String> students; // Stores enrollment numbers of students who marked their attendance
   List<String> ipAddresses; // Stores IPv4 addresses from which attendance has been marked
 
@@ -68,10 +67,9 @@ Future <String> connect_and_send(String host, String port, String message) async
     result = data.toString();
     socket.close();
   }
-  while(result == null)
-    {
+  while(result == null) {
       await new Future.delayed(const Duration(seconds : 1));
-    }
+  }
   print('Server said : ${result}');
   return result;
 }
