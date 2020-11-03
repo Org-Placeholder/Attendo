@@ -1,4 +1,6 @@
 import 'package:attendo/firebase/auth_service.dart';
+import 'package:attendo/firebase/database.dart';
+import 'package:attendo/models/user.dart';
 import 'package:attendo/screens/professor-home-page.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +39,6 @@ class _BodyState extends State<Body> {
         setState(() {
           error_msg = "Please fill all the fields !";
         });
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ShowCoursesProfessor()));
       }
      else{ // keeping the student and professor login same for now.
        dynamic result=await _auth.signInWithEmailAndPassword(email_controller.text, password_controller.text);
@@ -48,7 +49,17 @@ class _BodyState extends State<Body> {
             });
           }
        else{
-         print("Sucessfully Signed in.");
+         DatabaseService service =new DatabaseService();
+         userinfo info = await service.getUserFromUid(result.uid);
+         if(info.gettype()== 1){
+           print("Login Sucessful");
+           Navigator.push(context, MaterialPageRoute(builder: (context) => ShowCoursesProfessor()));
+         }
+         else{
+           setState(() {
+             error_msg="Please login with professor credentials.";
+           });
+         }
        }
      }
     }
