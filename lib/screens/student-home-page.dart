@@ -99,9 +99,8 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                           if(nsdResult == null){
                             serverMessage = "Error";
                           }
-                          var host = nsdResult['host'],port = nsdResult['port'];
-
                           if(serverMessage == "ok") {
+                            var host = nsdResult['host'],port = nsdResult['port'];
                             serverMessage = await connect_and_send(host, port, enrollment_num);
                           }
 
