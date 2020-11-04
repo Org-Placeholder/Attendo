@@ -3,12 +3,13 @@ class Service
 {
   BonsoirBroadcast broadcast;
   BonsoirService service;
-   Future <void> registerService(String service_name) async
+  int port = 3030;
+  Future <void> registerService(String service_name) async
   {
     service = BonsoirService(
       name: service_name, // Put your service name here.
       type: service_name, // Put your service type here. Syntax : _ServiceType._TransportProtocolName. (see http://wiki.ros.org/zeroconf/Tutorials/Understanding%20Zeroconf%20Service%20Types).
-      port: 3030, // Put your service port here.
+      port: port, // Put your service port here.
     );
 
     broadcast = BonsoirBroadcast(service: service);
