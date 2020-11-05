@@ -3,6 +3,7 @@ import 'package:attendo/screens/prof-student-common-drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 
+import '../firebase/database.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/professor-course-page.dart';
@@ -50,29 +51,51 @@ class ShowCardsProfessor extends StatefulWidget {
 }
 
 class _ShowCardsProfessor extends State<ShowCardsProfessor> {
+  var ProfName  = [
+    //'Sandeep Kumar' , 'Balasubramanian Raman' , 'Sudeep Roy' , 'Subudhi Sudhakar' , 'Sateesh Kumar' , 'Falguni Pathnaik'
+  ];
+  var CourseName = [
+    //'Object Oriented Design and Analysis' ,'Data Structures and Laboratory' , 'Computer Architecture' , 'Signals and Systems' , 'ThermoDynamics' , 'Economics'
+  ];
+  var ImageURL = [
+    /*"https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
+    "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
+    "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
+    "https://picsum.photos/id/237/200/300",
+    "https://picsum.photos/id/237/200/300",
+    "https://picsum.photos/id/237/200/300"*/
+  ];
+  var ClassProfessor = [
+    //'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'
+  ];
+  void getcourses() async{
+    var profname_temp=[],courseName_temp=[],imageurl_temp=[],classprof_temp=[];
+    var result=[];
+    result=await getProfessorCourses("Subu");
+    print('kuch to aya');
+    for(int i=0;i<result.length;i++)
+    {
+      profname_temp.add(result[i].get("Prof_name"));
+      courseName_temp.add(result[i].get("Course_Name"));
+      imageurl_temp.add("https://picsum.photos/id/237/200/300");
+      classprof_temp.add(result[i].get("Course_Code"));
+    }
+    setState(() {
+      ProfName=profname_temp;
+      CourseName=courseName_temp;
+      ImageURL=imageurl_temp;
+      ClassProfessor=classprof_temp;
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    var ProfName  = [
-      'Sandeep Kumar' , 'Balasubramanian Raman' , 'Sudeep Roy' , 'Subudhi Sudhakar' , 'Sateesh Kumar' , 'Falguni Pathnaik'
-    ];
-    var CourseName = [
-      'Object Oriented Design and Analysis' ,'Data Structures and Laboratory' , 'Computer Architecture' , 'Signals and Systems' , 'ThermoDynamics' , 'Economics'
-    ];
-    var ImageURL = [
-      "https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
-      "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
-      "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
-      "https://picsum.photos/id/237/200/300",
-      "https://picsum.photos/id/237/200/300",
-      "https://picsum.photos/id/237/200/300"
-    ];
-    var ClassProfessor = [
-      'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'
-    ];
     bool TappedYes = false;
     final course_name_controller = TextEditingController();
     final course_code_controller = TextEditingController();
     final course_image_controller = TextEditingController();
+    if(ProfName.length==0) {
+      getcourses();
+    }
     return Scaffold(
       backgroundColor:PrimaryColor,
       body :
@@ -139,19 +162,19 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
         onPressed: () async {
           final action =  await DialogProfessor.addCourseDialog(context, 'Add Course', course_name_controller, course_code_controller, course_image_controller);
           if(action == DialogAction.add)
+          {
+            if(course_image_controller.text == "")
             {
-              if(course_image_controller.text == "")
-                {
-                  course_image_controller.text = "https://picsum.photos/id/237/200/300";
-                }
-              print("Course Name = " + course_name_controller.text + " Course code = " + course_code_controller.text + " Course image = " + course_image_controller.text);
+              course_image_controller.text = "https://picsum.photos/id/237/200/300";
             }
+            print("Course Name = " + course_name_controller.text + " Course code = " + course_code_controller.text + " Course image = " + course_image_controller.text);
+          }
           course_image_controller.text = "";
           course_code_controller.text = "";
           course_name_controller.text = "";
         },
         backgroundColor: PrimaryColor,
-          child: Icon(Icons.add,),
+        child: Icon(Icons.add,),
       ),
     );
   }
