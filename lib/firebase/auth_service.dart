@@ -13,14 +13,14 @@ class AuthService{ // class for handling all firebase related queries
    return _auth.authStateChanges().map((User user) => _userFromFirebase(user));
  }
   // register with email and password
-  Future registerWithEmailAndPassword(String email,String password,String name,int type) async
+  Future registerWithEmailAndPassword(String email,String password,String name,int type,String enroll) async
   {
     try
         {
           UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
           User user=result.user;
           // adding the new user to the database
-          await DatabaseService(uid: user.uid).addUser(name, type,user.uid);
+          await DatabaseService(uid: user.uid).addUser(name, type,user.uid,enroll);
           return _userFromFirebase(user);
         }catch(e)
           {

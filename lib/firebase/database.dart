@@ -8,8 +8,8 @@ class DatabaseService{
   //defining a collection refference
   final CollectionReference UserCollection = FirebaseFirestore.instance.collection('users');
   // adding user to the database
-  Future addUser(String name,int type,String userid) async{ // also including user id for now
-     return await UserCollection.doc(uid).set({'Name':name,'User_Type':type,"User_id":userid});
+  Future addUser(String name,int type,String userid,String enroll) async{ // also including user id for now
+     return await UserCollection.doc(uid).set({'Name':name,'User_Type':type,'User_id':userid,'Enroll_No':enroll});
   }
  Future getUserFromUid(String uid) async{ // returns user information given userid
     DocumentSnapshot doc = await UserCollection.doc(uid).get();
