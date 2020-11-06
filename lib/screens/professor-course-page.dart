@@ -70,8 +70,21 @@ class ShowMarkedStudents extends StatefulWidget {
 }
 
 class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
-  var Enrollment ;
   bool set_state = true;
+  var Enrollment ;
+
+  void updateStudents(Server server) async{
+    //Server closes after 180 seconds
+    //List of students who have marked attendance is updated and displayed every second
+    int max_time = 180,time_elapsed = 0;
+    while(time_elapsed <= max_time){
+      await new Future.delayed(Duration(seconds : 1));
+      time_elapsed++;
+      setState(() {
+        Enrollment = server.students;
+      });
+    }
+  }
   void getStudents() async{
     //Need to get courseCode
     String courseCode = "CSN-291";
@@ -79,20 +92,13 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
     var service_name = "_"+courseCode+"._tcp";
     await service.registerService(service_name);
     var server = Server(service.port);
-    int max_time = 90;
-    await new Future.delayed(const Duration(seconds : max_time));
-    //server closes after 90 seconds
-    server.closeServer();
-    setState(() {
-      Enrollment = server.students;
-    });
+    updateStudents(server);
   }
   @override
   Widget build(BuildContext context) {
     final enrolment_number_controller = TextEditingController();
-    bool b = true;
-    if(b){
-      b = false;
+    if(set_state){
+      set_state = false;
       getStudents();
     }
     return Scaffold(
