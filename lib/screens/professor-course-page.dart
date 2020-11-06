@@ -73,7 +73,7 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
   bool set_state = true;
   var Enrollment ;
 
-  void updateStudents(Server server) async{
+  Future<void> updateStudents(Server server) async{
     //Server closes after 180 seconds
     //List of students who have marked attendance is updated and displayed every second
     int max_time = 180,time_elapsed = 0;
@@ -92,7 +92,8 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
     var service_name = "_"+courseCode+"._tcp";
     await service.registerService(service_name);
     var server = Server(service.port);
-    updateStudents(server);
+    await updateStudents(server);
+    server.closeServer();
   }
   @override
   Widget build(BuildContext context) {
