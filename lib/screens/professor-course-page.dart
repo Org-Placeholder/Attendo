@@ -71,7 +71,7 @@ class ShowMarkedStudents extends StatefulWidget {
 
 class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
   bool set_state = true;
-  var Enrollment ;
+  var Enrollment = ["0"];
 
   Future<void> updateStudents(Server server) async{
     //Server closes after 180 seconds
@@ -88,7 +88,7 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
   void getStudents() async{
     //Need to get courseCode
     String courseCode = "CSN-291";
-    var service = Service();
+    Service service = new Service();
     var service_name = "_"+courseCode+"._tcp";
     await service.registerService(service_name);
     var server = Server(service.port);

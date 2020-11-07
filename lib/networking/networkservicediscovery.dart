@@ -26,7 +26,6 @@ class Service
 class ServiceDiscovery
 {
   int wait_time = 5;
-  //Implementation needs to be modified to terminate after wait_time seconds if service isn't discovered
   Future < Map <String, dynamic> > discoverServices(String service_name) async
   {
 

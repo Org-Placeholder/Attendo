@@ -1,4 +1,6 @@
+import 'package:attendo/screens/professor-course-page.dart';
 import 'package:attendo/screens/professor-home-page.dart';
+import 'package:attendo/screens/student-home-page.dart';
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/auth.dart';
 import 'package:attendo/screens/registration.dart';

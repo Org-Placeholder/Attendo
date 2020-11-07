@@ -4,8 +4,8 @@ class Server
 {
   //server is declared here so that we can close it as per need.
   HttpServer server;
-  List<String> students; // Stores enrollment numbers of students who marked their attendance
-  List<String> ipAddresses; // Stores IPv4 addresses from which attendance has been marked
+  List<String> students = [""]; // Stores enrollment numbers of students who marked their attendance
+  List<String> ipAddresses = [""]; // Stores IPv4 addresses from which attendance has been marked
 
 
   //constructor will directly start server
