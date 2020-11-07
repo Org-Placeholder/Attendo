@@ -59,7 +59,11 @@ class Server
 //This will connect to the server, send the message, close the socket and return the message recieved from server
 Future <String> connect_and_send(String host, String port, String message) async
 {
-  WebSocket socket = await WebSocket.connect('ws://' + host + ':' + port +'/ws');
+  print("Port:"+port);
+  String s = 'ws://' + host + ':' + port +'/ws';
+  print(s);
+  WebSocket socket = await WebSocket.connect(s);
+  print('got socket');
   socket.add(message);
   String result;
   await for (var data in socket) {
