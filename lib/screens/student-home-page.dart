@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:attendo/screens/failure-dialog.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
+import 'package:attendo/screens/student-course-details.dart';
 class CoursesforStudents extends StatefulWidget {
   @override
   _CoursesforStudentsState createState() => _CoursesforStudentsState();
@@ -49,7 +50,8 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
     'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'
   ];
   var CourseName = [
-    'Object Oriented Design and Analysis' ,'Data Structures and Laboratory' , 'Computer Architecture' , 'Signals and Sytems' , 'ThermoDynamics' , 'Economics'
+    'Object Oriented Design and Des' ,'Data Structures and Laboratory' , 'Computer Architecture' , 'Signals and Sytems' , 'ThermoDynamics' , 'Economics'
+    // ^ Yeh thik karna
   ];
 
   var ImageURL = [
@@ -60,7 +62,10 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
     "https://picsum.photos/id/237/200/300",
     "https://picsum.photos/id/237/200/300"
   ];
-
+  var MoreIcon = Icon(
+    Icons.more_vert,
+    color: Colors.grey.shade900,
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,7 +112,7 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                                 ),
                               ),
                               SizedBox(width : 10),
-                              Column (
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   // Text(ClassStudent[index], style : TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.bold)),
@@ -116,7 +121,18 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                                   //Text(CourseName[index], style : TextStyle(color: Colors.grey, fontSize: 13.0, fontWeight: FontWeight.bold,  )),
                                   Text(CourseName[index], style : TextStyle(color: Colors.grey, fontSize: 13.0, fontWeight: FontWeight.bold), textAlign: TextAlign.end ,),
                                 ],
-                              )
+                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                  IconButton(
+                                      icon:MoreIcon,
+                                    onPressed: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => StudentCourseDetails()));
+                                    },
+                                  )
+                              ],
+                            ),
                             ],
                           ),
                       )
