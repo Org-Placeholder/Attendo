@@ -88,7 +88,7 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                     padding:  EdgeInsets.symmetric(horizontal: 10.0,vertical : 10.0),
                     child : Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                       FlatButton(
                         onPressed: () {
@@ -122,21 +122,24 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                                   Text(CourseName[index], style : TextStyle(color: Colors.grey, fontSize: 13.0, fontWeight: FontWeight.bold), textAlign: TextAlign.end ,),
                                 ],
                               ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                  IconButton(
-                                      icon:MoreIcon,
-                                    onPressed: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => StudentCourseDetails()));
-                                    },
-                                  )
-                              ],
-                            ),
+                            //Spacer(),
+
                             ],
                           ),
-                      )
+                      ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            IconButton(
+                              icon:MoreIcon,
+                              onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => StudentCourseDetails()));
+                              },
+                            )
+                          ],
+                        ),
                       ],
+
                     ),
                   ),
                 ),
