@@ -71,7 +71,7 @@ class ShowMarkedStudents extends StatefulWidget {
 
 class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
   bool set_state = true;
-  var Enrollment = ["0"];
+  List<String> Enrollment = [];
 
   Future<void> updateStudents(Server server) async{
     //Server closes after 180 seconds

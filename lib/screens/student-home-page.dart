@@ -95,14 +95,11 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                           ServiceDiscovery nsd = new ServiceDiscovery();
 
                           var nsdResult = await nsd.discoverServices(serviceName);
-                          var serverMessage = "ok";
+                          var serverMessage = "OK";
                           if(nsdResult == null){
                             serverMessage = "Error";
                           }
-                          else{
-                            print("woohoo");
-                          }
-                          if(serverMessage == "ok") {
+                          if(serverMessage == "OK") {
                             print(nsdResult);
                             String host = nsdResult["service.ip"];
                             int port = nsdResult["service.port"];
@@ -110,7 +107,7 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                             serverMessage = await connect_and_send(host,port,enrollment_num);
                           }
 
-                          if(serverMessage == 'ok') {
+                          if(serverMessage == "OK") {
                             showAttendanceMarkedSuccess.ConfirmDialog(context, 'Marked!', ClassStudent[index]);
                           } else {
                             showAttendanceMarkedFailure.ConfirmDialog(context, 'Marked!', ClassStudent[index]);

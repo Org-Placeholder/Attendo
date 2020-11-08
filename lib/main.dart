@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: CoursesforStudents(),
+      home: AuthScreen(),
       //home: MarkAttendanceProfessor(),
       //home: NetScreen(),
       debugShowCheckedModeBanner: false,
