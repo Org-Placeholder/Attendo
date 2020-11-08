@@ -89,7 +89,7 @@ class _NetScreenState extends State<NetScreen> {
 
   void connectsend() async
   {
-    String result = await connect_and_send("127.0.0.1", "3030", "Alu lelo");
+    String result = await connect_and_send("127.0.0.1", 8081, "Alu lelo");
     setState(() {
       serverSaid = result;
     });

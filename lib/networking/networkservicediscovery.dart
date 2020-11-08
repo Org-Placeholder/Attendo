@@ -3,7 +3,7 @@ class Service
 {
   BonsoirBroadcast broadcast;
   BonsoirService service;
-  int port = 3333;
+  int port = 49160;
   Future <void> registerService(String service_name) async
   {
     service = BonsoirService(

@@ -104,9 +104,10 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                           }
                           if(serverMessage == "ok") {
                             print(nsdResult);
-                            var host = nsdResult["service.ip"],port = nsdResult["service.port"];
+                            String host = nsdResult["service.ip"];
+                            int port = nsdResult["service.port"];
                             print("Port: "+port.toString());
-                            serverMessage = await connect_and_send(host,port.toString(),enrollment_num);
+                            serverMessage = await connect_and_send(host,port,enrollment_num);
                           }
 
                           if(serverMessage == 'ok') {
