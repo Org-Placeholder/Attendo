@@ -3,12 +3,13 @@ class Service
 {
   BonsoirBroadcast broadcast;
   BonsoirService service;
-   Future <void> registerService(String service_name) async
+  int port = 49160;
+  Future <void> registerService(String service_name) async
   {
     service = BonsoirService(
       name: service_name, // Put your service name here.
       type: service_name, // Put your service type here. Syntax : _ServiceType._TransportProtocolName. (see http://wiki.ros.org/zeroconf/Tutorials/Understanding%20Zeroconf%20Service%20Types).
-      port: 3030, // Put your service port here.
+      port: port, // Put your service port here.
     );
 
     broadcast = BonsoirBroadcast(service: service);
@@ -24,6 +25,7 @@ class Service
 
 class ServiceDiscovery
 {
+  int wait_time = 5;
   Future < Map <String, dynamic> > discoverServices(String service_name) async
   {
 
@@ -31,9 +33,9 @@ class ServiceDiscovery
     String type = service_name;
     // Once defined, we can start the discovery :
     BonsoirDiscovery discovery = BonsoirDiscovery(type: type);
+    var result;
     await discovery.ready;
     await discovery.start();
-    var result;
     // If you want to listen to the discovery :
     discovery.eventStream.listen((event) {
       if (event.type == BonsoirDiscoveryEventType.DISCOVERY_SERVICE_RESOLVED) {
@@ -46,11 +48,17 @@ class ServiceDiscovery
         result = event.service.toJson();
       }
     });
-    while(result == null)
-      {
-        await new Future.delayed(const Duration(seconds : 1));
-      }
-    print('Service found : ${result}');
+    int time_elapsed = 0;
+    while(result == null && time_elapsed<= wait_time) {
+      await new Future.delayed(const Duration(seconds : 1));
+      time_elapsed++;
+    }
+    if(result == null) {
+        print("Service not found");
+        discovery.stop();
+    } else {
+      print('Service found : ${result}');
+    }
     return result;
   }
 }
