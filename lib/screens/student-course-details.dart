@@ -2,7 +2,6 @@ import 'package:attendo/screens/prof-student-common-drawer.dart';
 import 'package:attendo/screens/success-dialog.dart';
 import 'package:attendo/screens/student-course-page.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
 class StudentCourseDetails extends StatefulWidget {
@@ -49,17 +48,47 @@ class ShowCourseDetails extends StatefulWidget {
 class _ShowCourseDetailsState extends State<ShowCourseDetails> {
   @override
   Widget build(BuildContext context) {
+    //access details here
+    var ratio_attended = 0.8;
+    var bar_color;
+    if(ratio_attended > 0.5)
+      {
+        bar_color = Colors.green;
+      }
+    else
+      {
+        bar_color = Colors.red;
+      }
+
+    var percentage = ratio_attended*100;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-        body: Row (
-          mainAxisAlignment: MainAxisAlignment.start,
-           crossAxisAlignment: CrossAxisAlignment.start,
+        body: Column(
           children: <Widget>[
-            Container(
-              height: 150,
-            child :SfRadialGauge()
-            )
-        ],
-        ),
+            SizedBox(
+              height: 25,
+            ),
+            SizedBox(
+              height: size.height*0.3,
+              child: Stack(
+                children: <Widget>[
+                  Center(
+                    child: Container(
+                      width: size.height*0.3,
+                      height: size.height*0.3,
+                      child: new CircularProgressIndicator(
+                        strokeWidth: 15,
+                        value: ratio_attended,
+                        valueColor: new AlwaysStoppedAnimation<Color>(bar_color),
+                      ),
+                    ),
+                  ),
+                  Center(child: Text("${percentage}% classes attended")),
+                ],
+              ),
+            ),
+          ],
+        )
     );
   }
 }
