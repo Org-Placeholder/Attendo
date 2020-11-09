@@ -78,7 +78,8 @@ class _BodyState extends State<Body> {
           });
         }
         else{
-          print("Registered"); // implies data registerd on firebase
+          print("Registered");
+          Navigator.pop(context);// implies data registerd on firebase
         }
       }
     }
