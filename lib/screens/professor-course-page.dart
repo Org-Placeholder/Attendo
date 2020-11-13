@@ -109,14 +109,35 @@ class prof_lectures extends StatelessWidget {
 }
 
 class students_attendance extends StatelessWidget {
+  var ImageURL = [
+    /*"https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
+    "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
+    "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
+    "https://picsum.photos/id/237/200/300",
+    "https://picsum.photos/id/237/200/300",
+    "https://picsum.photos/id/237/200/300"*/
+  ];
+  var percentage = 50;
   @override
   Widget build(BuildContext context) {
-
-    //database function calls go here
-    //this will show list of students enrolled in the course along with their attendance percentage
-    //devanshu your work is here too :0
+    // TODO: implement build
     return Container(
-      child: Text("Per student details come here :)"),
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: ListView.builder(
+                itemCount: 5,
+                itemBuilder: (BuildContext context , int index){
+                  return ListTile(
+                    leading: Text("Bleh"),
+                    trailing: Text("${percentage}%"),
+                    title : Text("List"),
+                 );
+               },
+            ),
+          )
+        ],
+      ),
     );
   }
 }
