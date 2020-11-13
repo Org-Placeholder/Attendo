@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 import '../firebase/database.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
-import 'package:attendo/screens/professor-course-page.dart';
+import 'package:attendo/screens/professor-take-attendance.dart';
 class ShowCoursesProfessor extends StatefulWidget {
   @override
   _ShowCoursesProfessorState createState() => _ShowCoursesProfessorState();

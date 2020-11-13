@@ -1,145 +1,122 @@
-import 'package:attendo/networking/networkservicediscovery.dart';
-import 'package:attendo/networking/socket.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../firebase/database.dart';
+import 'package:flutter/rendering.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
-import 'package:attendo/screens/modify-attendance-manually.dart';
 
-// class MarkAttendanceProfessor extends StatelessWidget{
-//   final String courseCode;
-//   MarkAttendanceProfessor({Key key, @required this.courseCode}) : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: PrimaryColor,
-//         centerTitle: true,
-//         toolbarHeight: 100,
-//         title :Text("Take Attendance For " + courseCode),
-//       ),
-//       body:  TabBarView(
-//       controller: controller,
-//       children: <Widget>[
-//         ShowCardsProfessor(),
-//       ],
-//     ),
-//     );
-//   }
-// }
-class MarkAttendanceProfessor extends StatefulWidget {
-  final String courseCode;
-  MarkAttendanceProfessor({Key key, @required this.courseCode}) : super(key: key);
+class ProfCourseScreen extends StatefulWidget {
   @override
-  _MarkAttendanceProfessor createState() => _MarkAttendanceProfessor();
+  _ProfCourseScreenState createState() => _ProfCourseScreenState();
 }
 
-class _MarkAttendanceProfessor extends State<MarkAttendanceProfessor> with SingleTickerProviderStateMixin {
-  TabController controller;
+class _ProfCourseScreenState extends State<ProfCourseScreen> {
+  int tab = 0;
+
   @override
-  void initState(){
-    super.initState();
-    controller = new TabController(length: 1, vsync: this , initialIndex: 0);
-  }
   Widget build(BuildContext context) {
+    var color1;
+    var color2;
+    var tab_child;
+    if(tab == 0)
+    {
+      color1 = PrimaryColor;
+      color2 = SecondaryColor;
+      tab_child = prof_lectures();
+    }
+    else
+    {
+      color1 = SecondaryColor;
+      color2 = PrimaryColor;
+      tab_child = students_attendance();
+    }
+
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: PrimaryColor,
       appBar: AppBar(
-        backgroundColor: PrimaryColor,
-        centerTitle: true,
-        toolbarHeight: 100,
-        title: Text("Your Courses"),
+      backgroundColor: PrimaryColor,
+      centerTitle: true,
+      toolbarHeight: 100,
+      title: Text("CSN-420"),
       ),
       drawer: account_drawer(
-        Name: "Sandeep Kumar",
-        Email: "sandeep.garg@cs.iitr.ac.in",
-        ImageURL: "https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
+      Name: "Angad Kambli" +", " + "19114041" ,//Angad kambli ke jagah naam aur 1911.. ke jagah uid aayega
+      Email: "kambli_a@yabadabadooooooooo.com",
+      ImageURL: "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
       ),
-      body:  TabBarView(
-        controller: controller,
-        children: <Widget>[
-          ShowMarkedStudents(),
-        ],
+      body: Container(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  color: color1,
+                  child: FlatButton(
+                    child: Text("Lectures", style: TextStyle(color: Colors.white),),
+                    onPressed: ()
+                    {
+                      if(tab != 0)
+                      {
+                        setState(()
+                        {
+                          tab = 0;
+                        });
+                      }
+                    },
+                  ),
+                  width: size.width*0.5,
+                ),
+                Container(
+                  color: color2,
+                  child: FlatButton(
+                    child: Text("Students", style: TextStyle(color: Colors.white)),
+                    onPressed: ()
+                    {
+                      if(tab != 1)
+                      {
+                        setState(()
+                        {
+                          tab = 1;
+                        });
+                      }
+                    },
+                  ),
+                  width: size.width*0.5,
+                )
+              ],
+            ),
+            SizedBox(height: 10,),
+            tab_child,
+          ],
+        ),
       ),
     );
   }
 }
-class ShowMarkedStudents extends StatefulWidget {
-  @override
-  _ShowMarkedStudentsState createState() => _ShowMarkedStudentsState();
-}
 
-class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
-  bool set_state = true;
-  List<String> Enrollment = [];
-
-  Future<void> updateStudents(Server server) async{
-    //Server closes after 180 seconds
-    //List of students who have marked attendance is updated and displayed every second
-    int max_time = 180,time_elapsed = 0;
-    while(time_elapsed <= max_time){
-      await new Future.delayed(Duration(seconds : 1));
-      time_elapsed++;
-      setState(() {
-        Enrollment = server.students;
-      });
-    }
-  }
-  void getStudents() async{
-    //Need to get courseCode
-    String courseCode = "CSN-291";
-    Service service = new Service();
-    var service_name = "_"+courseCode+"._tcp";
-    await service.registerService(service_name);
-    var server = Server(service.port);
-    await updateStudents(server);
-    server.closeServer();
-  }
+class prof_lectures extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    /*if(Enrollment.length==0) {
-      getinfo();
-    }
-    if(Result==null) {
-      getdateinfo();
-    }*/
-    final enrolment_number_controller = TextEditingController();
-    if(set_state){
-      set_state = false;
-      getStudents();
-    }
-    return Scaffold(
-      body: ListView.builder(
-          itemCount: Enrollment.length,
-          itemBuilder: (BuildContext context,int index){
-            return ListTile(
-                trailing: Text("Done",style: TextStyle(
-                    color: Colors.green,fontSize: 15),),
-                title:Text(Enrollment[index],)
-            );
-          }
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final action = await AddManualAttendance.AddCancelDialogue(context, 'Add Attendee', enrolment_number_controller);
-          if(action == DialogAction.add)
-          {
-            print("reached");
-            //Enrollment.add(enrolment_number_controller.text);
-            setState(() {
-              Enrollment.add(enrolment_number_controller.text);
-            });
-          }
-          enrolment_number_controller.text = "";
-        },
-        backgroundColor: PrimaryColor,
-        child: Icon(Icons.add,),
-      ),
+
+    //database functions calls go here
+    //this will show list of lectures along with date, number of students attended
+    //devanshu your work is here
+    return Container(
+      child: Text("Lecture deets come here :)"),
     );
   }
 }
 
+class students_attendance extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
 
-
+    //database function calls go here
+    //this will show list of students enrolled in the course along with their attendance percentage
+    //devanshu your work is here too :0
+    return Container(
+      child: Text("Per student details come here :)"),
+    );
+  }
+}
