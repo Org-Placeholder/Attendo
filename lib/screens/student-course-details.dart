@@ -53,9 +53,11 @@ class _ShowCourseDetailsState extends State<ShowCourseDetails> {
   @override
   Widget build(BuildContext context) {
     //access details here
-    var TotTaken = 10;
-    var TotAttended = 10;
-    double ratio_attended = TotAttended/TotTaken ;
+    int num = 2;
+    int fac = pow(10, num);
+    var TotTaken = 45;
+    var TotAttended = 37;
+    double ratio_attended = (TotAttended/TotTaken * fac).round() / fac;
     var bar_color;
     if(ratio_attended > 0.5) {
         bar_color = Colors.green;
