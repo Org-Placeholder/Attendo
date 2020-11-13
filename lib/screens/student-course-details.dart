@@ -53,10 +53,12 @@ class _ShowCourseDetailsState extends State<ShowCourseDetails> {
   @override
   Widget build(BuildContext context) {
     //access details here
-    int num = 2;
-    int fac = pow(10, num);
-    var TotTaken = 45;
-    var TotAttended = 37;
+    int decimals = 2;
+    int fac = pow(10, decimals);
+    double d = 1.234567889;
+    d = (d * fac).round() / fac;
+    var TotTaken = 24;
+    var TotAttended = 19;
     double ratio_attended = (TotAttended/TotTaken * fac).round() / fac;
     var bar_color;
     if(ratio_attended > 0.5) {
@@ -92,6 +94,51 @@ class _ShowCourseDetailsState extends State<ShowCourseDetails> {
                   Center(child:
                     Text("${percentage}% classes attended"),
                   ),
+                ],
+              ),
+            ),
+            Container(
+              height: 24,
+              child: Stack(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Total Classes Taken", style: TextStyle(fontSize: 20 , fontWeight: FontWeight.bold),),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              height: 24,
+              child: Stack(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("${TotTaken}" , style: TextStyle(fontSize: 18),),
+                  )
+                ],
+              ),
+            ),
+
+            Container(
+              height: 24,
+              child: Stack(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Total Classes Attended", style: TextStyle(fontSize: 20 , fontWeight: FontWeight.bold),),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              height: 24,
+              child: Stack(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("${TotAttended}" , style: TextStyle(fontSize: 18),),
+                  )
                 ],
               ),
             ),
