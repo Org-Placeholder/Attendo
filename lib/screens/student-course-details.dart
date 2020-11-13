@@ -4,7 +4,7 @@ import 'package:attendo/screens/student-course-page.dart';
 import 'package:flutter/cupertino.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:math';
 class StudentCourseDetails extends StatefulWidget {
   @override
   _StudentCourseDetailsState createState() => _StudentCourseDetailsState();
@@ -53,7 +53,9 @@ class _ShowCourseDetailsState extends State<ShowCourseDetails> {
   @override
   Widget build(BuildContext context) {
     //access details here
-    double ratio_attended = 0.8;
+    var TotTaken = 10;
+    var TotAttended = 10;
+    double ratio_attended = TotAttended/TotTaken ;
     var bar_color;
     if(ratio_attended > 0.5) {
         bar_color = Colors.green;
