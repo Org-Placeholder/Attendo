@@ -4,6 +4,7 @@ import 'package:attendo/screens/student-course-page.dart';
 import 'package:flutter/cupertino.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
+
 class StudentCourseDetails extends StatefulWidget {
   @override
   _StudentCourseDetailsState createState() => _StudentCourseDetailsState();
@@ -11,6 +12,7 @@ class StudentCourseDetails extends StatefulWidget {
 
 class _StudentCourseDetailsState extends State<StudentCourseDetails> with SingleTickerProviderStateMixin {
   TabController controller;
+
   @override
   void initState(){
   super.initState();
@@ -46,30 +48,30 @@ class ShowCourseDetails extends StatefulWidget {
 }
 
 class _ShowCourseDetailsState extends State<ShowCourseDetails> {
+
+
   @override
   Widget build(BuildContext context) {
     //access details here
-    var ratio_attended = 0.8;
+    double ratio_attended = 0.8;
     var bar_color;
-    if(ratio_attended > 0.5)
-      {
+    if(ratio_attended > 0.5) {
         bar_color = Colors.green;
       }
-    else
-      {
+    else {
         bar_color = Colors.red;
       }
-
-    var percentage = ratio_attended*100;
+    var percentage = (ratio_attended)*100;
+    print(percentage);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         body: Column(
           children: <Widget>[
             SizedBox(
-              height: 25,
+              height: 30,
             ),
             SizedBox(
-              height: size.height*0.3,
+              height: size.height*0.5,
               child: Stack(
                 children: <Widget>[
                   Center(
@@ -83,13 +85,25 @@ class _ShowCourseDetailsState extends State<ShowCourseDetails> {
                       ),
                     ),
                   ),
-                  Center(child: Text("${percentage}% classes attended")),
+                  Center(child:
+                    Text("${percentage}% classes attended"),
+                  ),
                 ],
               ),
             ),
           ],
-        )
+        ),
+      floatingActionButton: FloatingActionButton.extended(
+            elevation: 2.0,
+            onPressed: () {
+                //karlo copy paste!
+            },
+            backgroundColor: PrimaryColor,
+            label: Text("Mark Attendance"),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+
   }
 }
 
