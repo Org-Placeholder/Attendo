@@ -1,3 +1,4 @@
+
 import 'package:attendo/screens/prof-student-common-drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
@@ -43,6 +44,7 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
       Name: "Angad Kambli" +", " + "19114041" ,//Angad kambli ke jagah naam aur 1911.. ke jagah uid aayega
       Email: "kambli_a@yabadabadooooooooo.com",
       ImageURL: "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
+
       ),
       body: Container(
         child: Column(
@@ -103,7 +105,7 @@ class prof_lectures extends StatelessWidget {
     //this will show list of lectures along with date, number of students attended
     //devanshu your work is here
     return Container(
-      child: Text("Lecture deets come here :)"),
+      child: Text("Later!"),
     );
   }
 }
@@ -130,7 +132,7 @@ class students_attendance extends StatelessWidget {
           itemCount: 10,
           itemBuilder: (BuildContext context, int index) =>
           SingleChildScrollView(
-            child:  ListTile(
+            child: ListTile(
               trailing: Text("${percentage[index]}%" ,style: TextStyle(color: (percentage[index] < 50) ? Colors.red:Colors.green,fontSize: 18)),
               title : Text("${Enrollment[index]}" , style: TextStyle(color: Colors.black , fontSize: 18 , fontWeight: FontWeight.bold),),
            )
