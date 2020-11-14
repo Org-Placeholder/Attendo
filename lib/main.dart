@@ -3,6 +3,7 @@ import 'package:attendo/screens/professor-course-page.dart';
 import 'package:attendo/screens/professor-home-page.dart';
 import 'package:attendo/screens/student-home-page.dart';
 import 'package:flutter/material.dart';
+import 'package:attendo/screens/student-course-details.dart';
 import 'package:attendo/screens/auth.dart';
 import 'package:attendo/screens/registration.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: AuthScreen(),
+      // home: CoursesforStudents(),
       //home: MarkAttendanceProfessor(),
       //home: NetScreen(),
       debugShowCheckedModeBanner: false,
