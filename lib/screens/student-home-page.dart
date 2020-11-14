@@ -93,31 +93,8 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                       FlatButton(
-                        onPressed: () async {
-                          //Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceStudents(courseName: CourseName[index],)));
-
-                          String serviceName = "_"+ClassStudent[index]+"._tcp",enrollment_num = '19114001';
-                          ServiceDiscovery nsd = new ServiceDiscovery();
-
-                          var nsdResult = await nsd.discoverServices(serviceName);
-                          var serverMessage = "OK";
-                          if(nsdResult == null){
-                            serverMessage = "Error";
-                          }
-                          if(serverMessage == "OK") {
-                            print(nsdResult);
-                            String host = nsdResult["service.ip"];
-                            int port = nsdResult["service.port"];
-                            print("Port: "+port.toString());
-                            serverMessage = await connect_and_send(host,port,enrollment_num);
-                          }
-
-                          if(serverMessage == "OK") {
-                            showAttendanceMarkedSuccess.ConfirmDialog(context, 'Marked!', ClassStudent[index]);
-                          } else {
-                            showAttendanceMarkedFailure.ConfirmDialog(context, 'Marked!', ClassStudent[index]);
-                          }
-
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => StudentCourseDetails(ClassStudent[index])));
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -149,17 +126,6 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                             ],
                           ),
                       ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            IconButton(
-                              icon:MoreIcon,
-                              onPressed: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => StudentCourseDetails()));
-                              },
-                            )
-                          ],
-                        ),
                       ],
 
                     ),
