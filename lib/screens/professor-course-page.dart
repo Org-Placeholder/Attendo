@@ -131,7 +131,7 @@ class students_attendance extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) =>
           SingleChildScrollView(
             child:  ListTile(
-              trailing: Text("${percentage[index]}%" ,),
+              trailing: Text("${percentage[index]}%" ,style: TextStyle(color: (percentage[index] < 50) ? Colors.red:Colors.green,fontSize: 18)),
               title : Text("${Enrollment[index]}" , style: TextStyle(color: Colors.white),),
            )
         ),
