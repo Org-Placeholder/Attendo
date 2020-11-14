@@ -1,3 +1,4 @@
+import 'package:attendo/firebase/database.dart';
 import 'package:attendo/networking/networkservicediscovery.dart';
 import 'package:attendo/networking/socket.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
@@ -49,28 +50,43 @@ class BuildStudentCourseCards extends StatefulWidget {
 
 class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
   var ClassStudent = [
-    'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'
+    //'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'
   ];
-  var CourseName = [
-    'Object Oriented Design and Des' ,'Data Structures and Laboratory' , 'Computer Architecture' , 'Signals and Sytems' , 'ThermoDynamics' , 'Economics'
-    // ^ Yeh thik karna
-  ];
+  var CourseName = [];
 
   var ImageURL = [
-    "https://picsum.photos/id/237/200/300",
-    "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
-    "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
-    "https://picsum.photos/id/237/200/300",
-    "https://picsum.photos/id/237/200/300",
-    "https://picsum.photos/id/237/200/300"
+    //"https://picsum.photos/id/237/200/300",
+    //"https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
+    //"https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
+    //"https://picsum.photos/id/237/200/300",
+    //"https://picsum.photos/id/237/200/300",
+    //"https://picsum.photos/id/237/200/300"
   ];
   var MoreIcon = Icon(
     Icons.more_vert,
     color: Colors.grey.shade900,
   );
+ void getcourses() async{
+   var classStudent_temp=[],courseName_temp=[],imageurl_temp=[];
+   var result=await getStudentCourses("19114017"); // displaying courses for 19114017 for now
+   print('aya');
+   for(int i=0;i<result.length;i++)
+      {
+          classStudent_temp.add(result[i].get("Course_Code"));
+          courseName_temp.add(result[i].get("Course_Name"));
+          imageurl_temp.add("https://picsum.photos/id/237/200/300");
+      }
+  setState(() {
+    ClassStudent=classStudent_temp;
+    CourseName=courseName_temp;
+    ImageURL=imageurl_temp;
+  });
+ }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    if(ClassStudent.length==0)
+        getcourses();
+   return Scaffold(
         backgroundColor:PrimaryColor,
         body :
         ListView.builder(

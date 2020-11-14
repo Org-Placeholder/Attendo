@@ -43,44 +43,45 @@ class _BodyState extends State<Body> {
       print("unique id = " + id_controller.text);
       print("username = " + email_controller.text + " full name = " + full_name_controller.text +" password = " + password_controller.text + " cp = " + confirm_password_controller.text + "\n");
       if(_value == 1)
-        {
-          print("Teacher");
-        }
+      {
+        print("Teacher");
+      }
       if(_value == 2)
-        {
+      {
         print("Student");
-        }
+      }
       if(email_controller.text == "" || full_name_controller.text == "" || password_controller.text == "" || confirm_password_controller.text == "")
-        {
-          iserror=true;
-          setState(() {
-            email = email_controller.text;
-            full_name = full_name_controller.text;
-            error_msg = "Please fill all the fields!";
-          });
-        }
+      {
+        iserror=true;
+        setState(() {
+          email = email_controller.text;
+          full_name = full_name_controller.text;
+          error_msg = "Please fill all the fields!";
+        });
+      }
       if(password_controller.text != confirm_password_controller.text)
+      {
+        iserror=true;
+        setState(() {
+          email = email_controller.text;
+          full_name = full_name_controller.text;
+          error_msg = "Passwords don't match :(";
+        });
+      }
+      if(!iserror) // if no error found
+          {
+        dynamic result = await _auth.registerWithEmailAndPassword(email_controller.text, password_controller.text,full_name_controller.text,id_controller.text, _value);
+        if(result == null)
         {
-          iserror=true;
           setState(() {
-            email = email_controller.text;
-            full_name = full_name_controller.text;
-            error_msg = "Passwords don't match :(";
+            error_msg="Registration was not sucessful :(";
           });
         }
-      if(!iserror) // if no error found
-         {
-           dynamic result = await _auth.registerWithEmailAndPassword(email_controller.text, password_controller.text,full_name_controller.text,_value);
-           if(result == null)
-               {
-                 setState(() {
-                   error_msg="Registration was not sucessful :(";
-                 });
-               }
-           else{
-             print("Registered"); // implies data registerd on firebase
-           }
-         }
+        else{
+          print("Registered");
+          Navigator.pop(context);// implies data registerd on firebase
+        }
+      }
     }
     return Container(
       height: size.height,
@@ -102,7 +103,7 @@ class _BodyState extends State<Body> {
                   Container(
                     width: size.width * 0.8,
                     decoration: BoxDecoration(
-                      color: PrimaryColor
+                        color: PrimaryColor
                     ),
                     child: DropdownButton(
                       style: TextStyle(color: Colors.white, fontSize: 25),

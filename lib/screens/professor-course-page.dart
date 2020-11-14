@@ -1,8 +1,10 @@
 import 'package:attendo/networking/networkservicediscovery.dart';
 import 'package:attendo/networking/socket.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../firebase/database.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/modify-attendance-manually.dart';
@@ -97,6 +99,12 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
   }
   @override
   Widget build(BuildContext context) {
+    /*if(Enrollment.length==0) {
+      getinfo();
+    }
+    if(Result==null) {
+      getdateinfo();
+    }*/
     final enrolment_number_controller = TextEditingController();
     if(set_state){
       set_state = false;
@@ -115,16 +123,16 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-           final action = await AddManualAttendance.AddCancelDialogue(context, 'Add Attendee', enrolment_number_controller);
-           if(action == DialogAction.add)
-             {
-               print("reached");
-               //Enrollment.add(enrolment_number_controller.text);
-               setState(() {
-                 Enrollment.add(enrolment_number_controller.text);
-               });
-             }
-           enrolment_number_controller.text = "";
+          final action = await AddManualAttendance.AddCancelDialogue(context, 'Add Attendee', enrolment_number_controller);
+          if(action == DialogAction.add)
+          {
+            print("reached");
+            //Enrollment.add(enrolment_number_controller.text);
+            setState(() {
+              Enrollment.add(enrolment_number_controller.text);
+            });
+          }
+          enrolment_number_controller.text = "";
         },
         backgroundColor: PrimaryColor,
         child: Icon(Icons.add,),
