@@ -32,7 +32,7 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
 
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: PrimaryColor,
+      backgroundColor:Colors.white,
       appBar: AppBar(
       backgroundColor: PrimaryColor,
       centerTitle: true,
@@ -132,7 +132,7 @@ class students_attendance extends StatelessWidget {
           SingleChildScrollView(
             child:  ListTile(
               trailing: Text("${percentage[index]}%" ,style: TextStyle(color: (percentage[index] < 50) ? Colors.red:Colors.green,fontSize: 18)),
-              title : Text("${Enrollment[index]}" , style: TextStyle(color: Colors.white),),
+              title : Text("${Enrollment[index]}" , style: TextStyle(color: Colors.black , fontSize: 18 , fontWeight: FontWeight.bold),),
            )
         ),
       )
