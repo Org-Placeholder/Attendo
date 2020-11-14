@@ -120,24 +120,20 @@ class students_attendance extends StatelessWidget {
   var percentage = 50;
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
     return Container(
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView.builder(
-                itemCount: 5,
-                itemBuilder: (BuildContext context , int index){
-                  return ListTile(
-                    leading: Text("Bleh"),
-                    trailing: Text("${percentage}%"),
-                    title : Text("List"),
-                 );
-               },
-            ),
-          )
-        ],
-      ),
-    );
+      height: 100,
+        child: ListView.builder(
+          itemCount: 5,
+        itemBuilder: (BuildContext context, int index) =>
+        SingleChildScrollView(
+           child:  ListTile(
+              leading: Text("Bleh"),
+              trailing: Text("${percentage}%"),
+              title : Text("List"),
+            )
+        ),
+      )
+      );
   }
 }
