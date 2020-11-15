@@ -8,22 +8,25 @@ import 'package:flutter/material.dart';
 import 'package:attendo/screens/prof-course-datewise.dart';
 
 class ProfCourseScreen extends StatefulWidget {
-  String course_code;
-  ProfCourseScreen(String code)
+  String course_code,uid;
+  ProfCourseScreen(String code, String temp)
   {
     course_code = code;
+    uid = temp;
   }
 
   @override
-  _ProfCourseScreenState createState() => _ProfCourseScreenState(course_code);
+  _ProfCourseScreenState createState() => _ProfCourseScreenState(course_code,uid);
 }
 
 class _ProfCourseScreenState extends State<ProfCourseScreen> {
   int tab = 0;
   String course_code;
-  _ProfCourseScreenState(String code)
+  String uid;
+  _ProfCourseScreenState(String code,temp)
   {
     course_code = code;
+    uid = temp;
   }
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
     {
       color1 = PrimaryColor;
       color2 = SecondaryColor;
-      tab_child = prof_lectures();
+      tab_child = prof_lectures(course_code);
     }
     else
     {
@@ -121,6 +124,10 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
 }
 
 class prof_lectures extends StatelessWidget {
+  String course_code;
+  prof_lectures(String temp) {
+    course_code = temp;
+  }
   @override
   var ImageURL = [
     /*"https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
@@ -193,6 +200,10 @@ class prof_lectures extends StatelessWidget {
 }
 
 class students_attendance extends StatelessWidget {
+  String course_code;
+  students_attendance(String temp) {
+    course_code = temp;
+  }
   var ImageURL = [
     /*"https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
     "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",

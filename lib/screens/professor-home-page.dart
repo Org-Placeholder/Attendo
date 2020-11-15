@@ -9,11 +9,19 @@ import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/professor-take-attendance.dart';
 class ShowCoursesProfessor extends StatefulWidget {
+  String uid;
+  ShowCoursesProfessor(String temp) {
+    uid = temp;
+  }
   @override
-  _ShowCoursesProfessorState createState() => _ShowCoursesProfessorState();
+  _ShowCoursesProfessorState createState() => _ShowCoursesProfessorState(uid);
 }
 
 class _ShowCoursesProfessorState extends State<ShowCoursesProfessor> with SingleTickerProviderStateMixin {
+  String uid;
+  _ShowCoursesProfessorState(String temp) {
+    uid = temp;
+  }
   TabController controller;
   @override
   void initState(){
@@ -37,7 +45,7 @@ class _ShowCoursesProfessorState extends State<ShowCoursesProfessor> with Single
       body:  TabBarView(
         controller: controller,
         children: <Widget>[
-          ShowCardsProfessor(),
+          ShowCardsProfessor(uid),
         ],
       ),
     );
@@ -47,11 +55,19 @@ class _ShowCoursesProfessorState extends State<ShowCoursesProfessor> with Single
 
 
 class ShowCardsProfessor extends StatefulWidget {
+  String uid;
+  ShowCardsProfessor(String temp) {
+    uid = temp;
+  }
   @override
-  _ShowCardsProfessor createState() => _ShowCardsProfessor();
+  _ShowCardsProfessor createState() => _ShowCardsProfessor(uid);
 }
 
 class _ShowCardsProfessor extends State<ShowCardsProfessor> {
+  String uid;
+  _ShowCardsProfessor(String temp) {
+    uid = temp;
+  }
   DatabaseService Service =new DatabaseService();
   var ProfName  = [
     //'Sandeep Kumar' , 'Balasubramanian Raman' , 'Sudeep Roy' , 'Subudhi Sudhakar' , 'Sateesh Kumar' , 'Falguni Pathnaik'
