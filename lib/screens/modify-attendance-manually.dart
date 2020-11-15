@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-enum DialogAction{add , Cancel}
+enum DialogActions{addmanual , Cancel}
 class AddManualAttendance{
-  static Future<DialogAction> AddCancelDialogue(
+  static Future<DialogActions> AddCancelDialogue(
       BuildContext context,
       String title,
       TextEditingController enrolment_number_controller,
@@ -40,17 +40,17 @@ class AddManualAttendance{
 
               actions: <Widget>[
                 FlatButton(
-                    onPressed: () => Navigator.of(context).pop(DialogAction.add),
+                    onPressed: () => Navigator.of(context).pop(DialogActions.addmanual),
                     child: const Text('Add')
                 ),
                 RaisedButton(
-                  onPressed: () => Navigator.of(context).pop(DialogAction.Cancel),
+                  onPressed: () => Navigator.of(context).pop(DialogActions.Cancel),
                   child : const Text("Cancel"),
                 ),
               ]
           );
         }
     );
-    return (action != null ) ? action : DialogAction.Cancel; //change according
+    return (action != null ) ? action : DialogActions.Cancel; //change according
   }
 }

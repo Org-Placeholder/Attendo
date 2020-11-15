@@ -1,5 +1,6 @@
 
 import 'package:attendo/screens/prof-student-common-drawer.dart';
+import 'package:attendo/screens/professor-take-attendance.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'constants.dart';
@@ -7,13 +8,23 @@ import 'package:flutter/material.dart';
 import 'package:attendo/screens/prof-course-datewise.dart';
 
 class ProfCourseScreen extends StatefulWidget {
+  String course_code;
+  ProfCourseScreen(String code)
+  {
+    course_code = code;
+  }
+
   @override
-  _ProfCourseScreenState createState() => _ProfCourseScreenState();
+  _ProfCourseScreenState createState() => _ProfCourseScreenState(course_code);
 }
 
 class _ProfCourseScreenState extends State<ProfCourseScreen> {
   int tab = 0;
-
+  String course_code;
+  _ProfCourseScreenState(String code)
+  {
+    course_code = code;
+  }
   @override
   Widget build(BuildContext context) {
     var color1;
@@ -39,7 +50,7 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
       backgroundColor: PrimaryColor,
       centerTitle: true,
       toolbarHeight: 100,
-      title: Text("CSN-420"),
+      title: Text(course_code),
       ),
       drawer: account_drawer(
       Name: "Angad Kambli" +", " + "19114041" ,//Angad kambli ke jagah naam aur 1911.. ke jagah uid aayega
@@ -47,6 +58,17 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
       ImageURL: "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
 
       ),
+      floatingActionButton: FloatingActionButton.extended(
+      elevation: 2.0,
+      onPressed: () async {
+      //Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceStudents(courseName: CourseName[index],)));
+        Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceProfessor(courseCode: course_code,)));
+
+      },
+        backgroundColor: PrimaryColor,
+        label: Text("Take Attendance"),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Container(
         child: Column(
           children: [

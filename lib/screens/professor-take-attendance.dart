@@ -1,6 +1,7 @@
 import 'package:attendo/networking/networkservicediscovery.dart';
 import 'package:attendo/networking/socket.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
+import 'package:attendo/screens/success-dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -34,46 +35,55 @@ class MarkAttendanceProfessor extends StatefulWidget {
   final String courseCode;
   MarkAttendanceProfessor({Key key, @required this.courseCode}) : super(key: key);
   @override
-  _MarkAttendanceProfessor createState() => _MarkAttendanceProfessor();
+  _MarkAttendanceProfessor createState() => _MarkAttendanceProfessor(courseCode);
 }
 
-class _MarkAttendanceProfessor extends State<MarkAttendanceProfessor> with SingleTickerProviderStateMixin {
-  TabController controller;
-  @override
-  void initState(){
-    super.initState();
-    controller = new TabController(length: 1, vsync: this , initialIndex: 0);
+class _MarkAttendanceProfessor extends State<MarkAttendanceProfessor>{
+  String course_code;
+  _MarkAttendanceProfessor(String code)
+  {
+    course_code = code;
   }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: PrimaryColor,
         centerTitle: true,
         toolbarHeight: 100,
-        title: Text("Your Courses"),
+        title: Text("Taking Attendance for " + course_code),
       ),
       drawer: account_drawer(
         Name: "Sandeep Kumar",
         Email: "sandeep.garg@cs.iitr.ac.in",
         ImageURL: "https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
       ),
-      body:  TabBarView(
-        controller: controller,
-        children: <Widget>[
-          ShowMarkedStudents(),
-        ],
-      ),
+      body: ShowMarkedStudents(course_code),
     );
   }
 }
 class ShowMarkedStudents extends StatefulWidget {
+
+  String course_code;
+  ShowMarkedStudents(String code)
+  {
+    course_code = code;
+  }
+
   @override
-  _ShowMarkedStudentsState createState() => _ShowMarkedStudentsState();
+  _ShowMarkedStudentsState createState() => _ShowMarkedStudentsState(course_code);
 }
+
 
 class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
   bool set_state = true;
   List<String> Enrollment = [];
+
+  String course_code;
+  _ShowMarkedStudentsState(String code)
+  {
+    course_code = code;
+  }
 
   Future<void> updateStudents(Server server) async{
     //Server closes after 180 seconds
@@ -86,6 +96,16 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
         Enrollment = server.students;
       });
     }
+
+    //perform upload @Chirag code goes here
+
+    bool upload_succesfull = true;
+    if(upload_succesfull)
+      {
+        showAttendanceMarkedSuccess.ConfirmDialog(context, 'Marked!', course_code );
+      }
+
+
   }
   void getStudents() async{
     //Need to get courseCode
@@ -124,9 +144,8 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final action = await AddManualAttendance.AddCancelDialogue(context, 'Add Attendee', enrolment_number_controller);
-          if(action == DialogAction.add)
+          if(action == DialogActions.addmanual)
           {
-            print("reached");
             //Enrollment.add(enrolment_number_controller.text);
             setState(() {
               Enrollment.add(enrolment_number_controller.text);
