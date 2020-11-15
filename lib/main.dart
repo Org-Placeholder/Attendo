@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-       home: ProfCourseScreen('MIN-106','12345678',new userinfo('Wadhwa', '12345678', 1)),
+       home: AuthScreen(),
       //home: ShowCoursesProfessor(),
       // home: ProfCourseScreen(),
       // home: CoursesforStudents(),

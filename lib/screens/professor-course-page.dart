@@ -167,33 +167,18 @@ class _prof_lecturesState extends State<prof_lectures> {
 
   //Enrollment = await service.getenroll(widget.course_code);
   Future<void> initialize_lists() async{
-    print(course_code);
     DatabaseService service = new DatabaseService();
-    print('called here');
     Enrollment = await service.getenrollno(course_code);
-    if(Enrollment == null){
-      print('unlucky');
-    }
-    else{
-      print('lucky');
-    }
     ControllerService service_ = new ControllerService();
     Map<String,int> mp = await service_.getAttendanceByDate(course_code);
-    print('inserting date and num');
-    print(mp);
     for(String k in mp.keys){
-      print('hello '+k);
       try {
         Dates.add(k);
       }catch(e){
         print(e);
       }
-      print('hello2 '+k);
       num_attended.add(mp[k]);
-      print('hello3 '+k);
     }
-    print('inserted');
-    print(Enrollment.toString()+'here');
     return;
   }
   @override
@@ -205,7 +190,6 @@ class _prof_lecturesState extends State<prof_lectures> {
           child:  FutureBuilder<void>(
             future: result,
             builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-              print("building");
               if(Enrollment.length > 0){
                 return ListView.builder(
                     itemCount: Dates.length,
@@ -230,7 +214,7 @@ class _prof_lecturesState extends State<prof_lectures> {
                 });
               }
               else if(snapshot.hasError){
-                return Text('hdoahwiohdho');
+                return Text('Error,please try again later');
               }
               else {
                   return SizedBox(
@@ -238,33 +222,9 @@ class _prof_lecturesState extends State<prof_lectures> {
                     width: MediaQuery.of(context).size.width*0.1,
                     height: MediaQuery.of(context).size.width*0.1,
                   );
-
               }
             }
           )
-        /*ListView.builder(
-            itemCount: Dates.length,
-            itemBuilder: (BuildContext context, int index) {
-              return new GestureDetector(
-                onTap: () {
-                  Navigator.push((context), MaterialPageRoute(builder: (context) => DatewiseClassDeets(num_attended[index], Enrollment.length, Dates[index])));
-                 },
-                child: Container(
-                  padding: EdgeInsets.only(left: 15.0 , right: 15.0),
-                  height: 45,
-                  child : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children : <Widget>[
-                      Container(
-                        child: Text(Dates[index] , style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                      ),
-                    ]
-                  ),
-                ),
-              );
-            }
-          )*/
-
       ),
     );
   }
@@ -272,8 +232,28 @@ class _prof_lecturesState extends State<prof_lectures> {
 
 class students_attendance extends StatelessWidget {
   String course_code;
+  List<double> percentage = [];
+  List<String> enrollment = [];
+  Future<void> result;
   students_attendance(String temp) {
     course_code = temp;
+    result = initialize_lists();
+  }
+  Future<void> initialize_lists() async{
+    ControllerService service = new ControllerService();
+    Map mp = await service.getClassAttendedByStudents(course_code);
+    print(mp);
+    for(String k in  mp.keys){
+      if(k!="total") {
+        enrollment.add(k);
+        double d = 100.0;
+        if(mp["total"]==0)
+            d = 0;
+        else
+          d = (d*mp[k])/mp["total"];
+        percentage.add(d);
+      }
+    }
   }
   var ImageURL = [
     /*"https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
@@ -283,25 +263,38 @@ class students_attendance extends StatelessWidget {
     "https://picsum.photos/id/237/200/300",
     "https://picsum.photos/id/237/200/300"*/
   ];
-  var percentage = [ 10 , 20 , 30 ,50 ,30 ,20 ,15 , 20 ,70 ,90  ];
-  var Enrollment = [
-    '19114001','19114002','19114003','19114004','19114005','19114006','19114007','19114008','19114009','19114010','19114011','19114012','19114013','19114014','19114015','19114016','19114017','19114018','19114019','19114020','19114021','19114022','19114023','19114024','19114025','19114026','19114027','19114028','19114029','19114030','19114031','19114032','19114033','19114034','19114035','19114036','19114037','19114038','19114039','19114040','19114041','19114042','19114043','19114044','19114045','19114046','19114047','19114048','19114049','19114050','19114051','19114052','19114053','19114054','19114055','19114056','19114057','19114058','19114059','19114060','19114061','19114062','19114063','19114064','19114065','19114066','19114067','19114068','19114069','19114070','19114071','19114072','19114073','19114074','19114075','19114076','19114077','19114078','19114079','19114080','19114081','19114082','19114083','19114084','19114085','19114086','19114087','19114088','19114089','19114090','19114091','19114092','19114093','19114094','19114095','19114096','19114097','19114098','19114099'
-  ];
   @override
   Widget build(BuildContext context) {
     var percentcolor;
     return Container(
       height: MediaQuery.of(context).size.height*0.7,
-        child: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (BuildContext context, int index) =>
-          SingleChildScrollView(
-            child: ListTile(
-              trailing: Text("${percentage[index]}%" ,style: TextStyle(color: (percentage[index] < 50) ? Colors.red:Colors.green,fontSize: 18)),
-              title : Text("${Enrollment[index]}" , style: TextStyle(color: Colors.black , fontSize: 18 , fontWeight: FontWeight.bold),),
-           )
-        ),
+      child:FutureBuilder<void>(
+        future: result,
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+          if(percentage.length>0){
+            return ListView.builder(
+              itemCount: percentage.length,
+              itemBuilder: (BuildContext context, int index) =>
+                SingleChildScrollView(
+                  child: ListTile(
+                  trailing: Text("${percentage[index]}%" ,style: TextStyle(color: (percentage[index] < 50) ? Colors.red:Colors.green,fontSize: 18)),
+                  title : Text("${enrollment[index]}" , style: TextStyle(color: Colors.black , fontSize: 18 , fontWeight: FontWeight.bold),),
+                )
+              ),
+            );
+          }
+          else if(snapshot.hasError){
+            return Text('Error,please try again later');
+          }
+          else{
+            return SizedBox(
+              child: CircularProgressIndicator(),
+              width: MediaQuery.of(context).size.width*0.1,
+              height: MediaQuery.of(context).size.width*0.1,
+            );
+          }
+        }
       )
-      );
+    );
   }
 }

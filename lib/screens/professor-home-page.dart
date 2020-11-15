@@ -76,6 +76,7 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
   _ShowCardsProfessor(String temp,userinfo info) {
     uid = temp;
     user = info;
+    print(user.getname());
   }
   DatabaseService Service =new DatabaseService();
   List<String> CourseName = [
@@ -93,20 +94,25 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
     //'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'
   ];
   void getcourses(String profname) async{
-    var courseName_temp=[],imageurl_temp=[],classprof_temp=[];
+    List<String> courseName_temp=[],imageurl_temp=[],classprof_temp=[];
     var result=[];
-    result=await Service.getProfessorCourses("profname");
-    print('kuch to aya');
+    result=await Service.getProfessorCourses(profname);
+    print(result);
     for(int i=0;i<result.length;i++)
     {
       courseName_temp.add(result[i].get("Course_Name"));
       imageurl_temp.add("https://picsum.photos/id/237/200/300");
       classprof_temp.add(result[i].get("Course_Code"));
+      print('done');
     }
     setState(() {
+      print('setting state');
       CourseName=courseName_temp;
+      print('set course name');
       ImageURL=imageurl_temp;
+      print('set image url');
       ClassProfessor=classprof_temp;
+      print('set state');
     });
   }
   @override

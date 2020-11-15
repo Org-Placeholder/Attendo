@@ -4,14 +4,24 @@ class ControllerService{
   DatabaseService Service =new DatabaseService();
   // function that returns total classes attended and total class occurrence
   Future getClassesAttendedStudent(String courseCode, String enrollno) async {
-      var arr=[];
+      List<int> arr=[];
       int tot_class=0,attended_class=0;
       var snap=[];
       snap=await Service.getSpecificCourseInfo(courseCode);
       tot_class=snap.length;
-      for(int i=0;i<tot_class;i++)
-         if(snap[i].get(enrollno)==true)
-            attended_class++;
+      for(int i=0;i<tot_class;i++) {
+        bool b = true;
+        try{
+          b = snap[i].get(enrollno);
+        }catch(e){
+          b = false;
+        }
+        if(b)
+          attended_class++;
+
+        print(enrollno);
+        print(attended_class);
+      }
       arr.add(attended_class);
       arr.add(tot_class);
       return arr;
@@ -21,18 +31,19 @@ class ControllerService{
   // courseCode in form of a map. map["total"] contains total number of classes held.
 
   Future getClassAttendedByStudents(String courseCode) async {
-    var enroll=[];
+     var enroll=[];
      enroll=await Service.getenrollno(courseCode);
      print(enroll);
-     Map mp=new Map();
+     Map<String,int> mp=new Map<String,int>();
      int total=0;
      var details=[];
      for(int i=0;i<enroll.length;i++){
         details=await getClassesAttendedStudent(courseCode,enroll[i]);
+        print(i.toString()+' '+details.toString());
         total=details[1];
         mp[enroll[i]]=details[0];
      }
-    mp["total"]=total;
+     mp["total"]=total;
      return mp;
   }
 
