@@ -1,4 +1,4 @@
-import 'package:attendo/firebase/auth_service.dart';
+import 'package:attendo/models/auth_service.dart';
 
 import 'constants.dart';
 import 'package:flutter/material.dart';

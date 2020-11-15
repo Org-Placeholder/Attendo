@@ -1,5 +1,6 @@
-import 'package:attendo/firebase/auth_service.dart';
-import 'package:attendo/firebase/database.dart';
+import 'package:attendo/controller/controller.dart';
+import 'package:attendo/models/auth_service.dart';
+import 'package:attendo/models/database.dart';
 import 'package:attendo/models/user.dart';
 import 'package:attendo/screens/professor-home-page.dart';
 import 'constants.dart';
@@ -24,6 +25,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   final AuthService _auth= AuthService();
+  ControllerService Service =new ControllerService();
   @override
   String error_msg = "";
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class _BodyState extends State<Body> {
     Size size = MediaQuery.of(context).size;
     void submit() async
     {
+      Service.getAttendanceByDate("MIN-106");
       print("username = " + email_controller.text + " password = " + password_controller.text);
       if(email_controller.text == "" ||  password_controller.text == "")
       {
