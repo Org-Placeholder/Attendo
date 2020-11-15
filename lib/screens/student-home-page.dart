@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:attendo/screens/failure-dialog.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
+import 'package:attendo/screens/student-course-details.dart';
 class CoursesforStudents extends StatefulWidget {
   @override
   _CoursesforStudentsState createState() => _CoursesforStudentsState();
@@ -51,9 +52,7 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
   var ClassStudent = [
     //'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'
   ];
-  var CourseName = [
-    //'Object Oriented Design and Analysis' ,'Data Structures and Laboratory' , 'Computer Architecture' , 'Signals and Sytems' , 'ThermoDynamics' , 'Economics'
-  ];
+  var CourseName = [];
 
   var ImageURL = [
     //"https://picsum.photos/id/237/200/300",
@@ -63,6 +62,10 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
     //"https://picsum.photos/id/237/200/300",
     //"https://picsum.photos/id/237/200/300"
   ];
+  var MoreIcon = Icon(
+    Icons.more_vert,
+    color: Colors.grey.shade900,
+  );
  void getcourses() async{
    var classStudent_temp=[],courseName_temp=[],imageurl_temp=[];
    var result=await getStudentCourses("19114017"); // displaying courses for 19114017 for now
@@ -103,34 +106,11 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                     padding:  EdgeInsets.symmetric(horizontal: 10.0,vertical : 10.0),
                     child : Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                       FlatButton(
-                        onPressed: () async {
-                          //Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceStudents(courseName: CourseName[index],)));
-
-                          String serviceName = "_"+ClassStudent[index]+"._tcp",enrollment_num = '19114001';
-                          ServiceDiscovery nsd = new ServiceDiscovery();
-
-                          var nsdResult = await nsd.discoverServices(serviceName);
-                          var serverMessage = "OK";
-                          if(nsdResult == null){
-                            serverMessage = "Error";
-                          }
-                          if(serverMessage == "OK") {
-                            print(nsdResult);
-                            String host = nsdResult["service.ip"];
-                            int port = nsdResult["service.port"];
-                            print("Port: "+port.toString());
-                            serverMessage = await connect_and_send(host,port,enrollment_num);
-                          }
-
-                          if(serverMessage == "OK") {
-                            showAttendanceMarkedSuccess.ConfirmDialog(context, 'Marked!', ClassStudent[index]);
-                          } else {
-                            showAttendanceMarkedFailure.ConfirmDialog(context, 'Marked!', ClassStudent[index]);
-                          }
-
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => StudentCourseDetails(ClassStudent[index])));
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -147,7 +127,7 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                                 ),
                               ),
                               SizedBox(width : 10),
-                              Column (
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   // Text(ClassStudent[index], style : TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.bold)),
@@ -156,11 +136,14 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                                   //Text(CourseName[index], style : TextStyle(color: Colors.grey, fontSize: 13.0, fontWeight: FontWeight.bold,  )),
                                   Text(CourseName[index], style : TextStyle(color: Colors.grey, fontSize: 13.0, fontWeight: FontWeight.bold), textAlign: TextAlign.end ,),
                                 ],
-                              )
+                              ),
+                            //Spacer(),
+
                             ],
                           ),
-                      )
+                      ),
                       ],
+
                     ),
                   ),
                 ),

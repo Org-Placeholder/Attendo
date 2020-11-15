@@ -10,7 +10,6 @@ class MarkAttendanceStudents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body : Text("Yet to be implemented. Page for " + courseName,),
         appBar: AppBar(
           backgroundColor: PrimaryColor,
           centerTitle: true,
