@@ -35,4 +35,24 @@ class ControllerService{
     mp["total"]=total;
      return mp;
   }
+
+  // function which returns number of students who attended the class on a particular date in form of a map
+
+  Future getAttendanceByDate(String courseCode) async{
+    var docsnap=[];
+    docsnap=await Service.getSpecificCourseInfo(courseCode);
+    Map<String,int> mp=new Map();
+    for(int i=0;i<docsnap.length;i++){
+      String date=docsnap[i].get("Date");
+      Map<String,dynamic> dat=docsnap[i].data();
+      int count=0;
+      for(MapEntry e in dat.entries)
+         if(e.value==true)
+            count++;
+      //print(date);
+      mp[date]=count;
+    }
+   print(mp);
+   return mp;
+  }
 }
