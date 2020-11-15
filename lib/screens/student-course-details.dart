@@ -13,22 +13,26 @@ import 'dart:math';
 class StudentCourseDetails extends StatefulWidget {
   String course_name;
   userinfo user;
-  StudentCourseDetails(String courseName,userinfo info)
+  String email;
+  StudentCourseDetails(String courseName,userinfo info,String email)
   {
     user = info;
     course_name = courseName;
+    this.email = email;
   }
   @override
-  _StudentCourseDetailsState createState() => _StudentCourseDetailsState(course_name,user);
+  _StudentCourseDetailsState createState() => _StudentCourseDetailsState(course_name,user,email);
 }
 
 class _StudentCourseDetailsState extends State<StudentCourseDetails>{
   String course_name;
   userinfo user;
-  _StudentCourseDetailsState(String courseName,userinfo info)
+  String email;
+  _StudentCourseDetailsState(String courseName,userinfo info,String email)
   {
     user = info;
     course_name = courseName;
+    this.email = email;
   }
   @override
   Widget build(BuildContext context) {
@@ -43,9 +47,8 @@ class _StudentCourseDetailsState extends State<StudentCourseDetails>{
             child: ShowCourseDetails(course_name,user),
           ),
         drawer: account_drawer(
-          Name: "Angad Kambli" + ", " + "19114041",
-          //Angad kambli ke jagah naam aur 1911.. ke jagah uid aayega
-          Email: "kambli_a@yabadabadooooooooo.com",
+          Name: user.getname() + ", " + user.getenrollno(),
+          Email: email,
           ImageURL: "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
         ),
         floatingActionButton: FloatingActionButton.extended(

@@ -1,3 +1,4 @@
+import 'package:attendo/models/user.dart';
 import 'package:attendo/networking/networkservicediscovery.dart';
 import 'package:attendo/networking/socket.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
@@ -33,16 +34,22 @@ import 'package:attendo/screens/modify-attendance-manually.dart';
 // }
 class MarkAttendanceProfessor extends StatefulWidget {
   final String courseCode;
-  MarkAttendanceProfessor({Key key, @required this.courseCode}) : super(key: key);
+  String email;
+  userinfo user;
+  MarkAttendanceProfessor({Key key, @required this.courseCode,String email,userinfo user}) : super(key: key);
   @override
-  _MarkAttendanceProfessor createState() => _MarkAttendanceProfessor(courseCode);
+  _MarkAttendanceProfessor createState() => _MarkAttendanceProfessor(courseCode,email,user);
 }
 
 class _MarkAttendanceProfessor extends State<MarkAttendanceProfessor>{
   String course_code;
-  _MarkAttendanceProfessor(String code)
+  String email;
+  userinfo user;
+  _MarkAttendanceProfessor(String code,String email,userinfo info)
   {
     course_code = code;
+    this.email = email;
+    user = info;
   }
   @override
   Widget build(BuildContext context) {
@@ -54,8 +61,8 @@ class _MarkAttendanceProfessor extends State<MarkAttendanceProfessor>{
         title: Text("Taking Attendance for " + course_code),
       ),
       drawer: account_drawer(
-        Name: "Sandeep Kumar",
-        Email: "sandeep.garg@cs.iitr.ac.in",
+        Name: user.getname()+' , '+user.getenrollno(),
+        Email: email,
         ImageURL: "https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
       ),
       body: ShowMarkedStudents(course_code),
@@ -97,7 +104,6 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
       });
     }
 
-    //perform upload @Chirag code goes here
     DatabaseService service = new DatabaseService();
     String date = new DateTime.now().toString();
     bool upload_successfull = await service.addAttendance(date, course_code, Enrollment);
@@ -112,9 +118,8 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
   }
   void getStudents() async{
     //Need to get courseCode
-    String courseCode = "CSN-291";
     Service service = new Service();
-    var service_name = "_"+courseCode+"._tcp";
+    var service_name = "_"+course_code+"._tcp";
     await service.registerService(service_name);
     var server = Server(service.port);
     await updateStudents(server);

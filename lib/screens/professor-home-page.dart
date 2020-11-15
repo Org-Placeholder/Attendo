@@ -12,20 +12,24 @@ import 'package:attendo/screens/professor-take-attendance.dart';
 class ShowCoursesProfessor extends StatefulWidget {
   String uid;
   userinfo user;
-  ShowCoursesProfessor(String temp,userinfo info) {
+  String email;
+  ShowCoursesProfessor(String temp,userinfo info,String email) {
     uid = temp;
     user = info;
+    this.email = email;
   }
   @override
-  _ShowCoursesProfessorState createState() => _ShowCoursesProfessorState(uid,user);
+  _ShowCoursesProfessorState createState() => _ShowCoursesProfessorState(uid,user,email);
 }
 
 class _ShowCoursesProfessorState extends State<ShowCoursesProfessor> with SingleTickerProviderStateMixin {
   String uid;
   userinfo user;
-  _ShowCoursesProfessorState(String temp,userinfo info) {
+  String email;
+  _ShowCoursesProfessorState(String temp,userinfo info,String email) {
     uid = temp;
     user = info;
+    this.email = email;
   }
   TabController controller;
   @override
@@ -43,14 +47,14 @@ class _ShowCoursesProfessorState extends State<ShowCoursesProfessor> with Single
       ),
       drawer: account_drawer(
         Name: user.getname()+", " + user.getenrollno(),
-        Email: "sandeep.garg@cs.iitr.ac.in",
+        Email: email,
         ImageURL: "https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
       ),
 
       body:  TabBarView(
         controller: controller,
         children: <Widget>[
-          ShowCardsProfessor(uid,user),
+          ShowCardsProfessor(uid,user,email),
         ],
       ),
     );
@@ -62,21 +66,24 @@ class _ShowCoursesProfessorState extends State<ShowCoursesProfessor> with Single
 class ShowCardsProfessor extends StatefulWidget {
   String uid;
   userinfo user;
-  ShowCardsProfessor(String temp,userinfo info) {
+  String email;
+  ShowCardsProfessor(String temp,userinfo info,String email) {
     uid = temp;
     user = info;
+    this.email = email;
   }
   @override
-  _ShowCardsProfessor createState() => _ShowCardsProfessor(uid,user);
+  _ShowCardsProfessor createState() => _ShowCardsProfessor(uid,user,email);
 }
 
 class _ShowCardsProfessor extends State<ShowCardsProfessor> {
   String uid;
   userinfo user;
-  _ShowCardsProfessor(String temp,userinfo info) {
+  String email;
+  _ShowCardsProfessor(String temp,userinfo info,String email) {
     uid = temp;
     user = info;
-    print(user.getname());
+    this.email = email;
   }
   DatabaseService Service =new DatabaseService();
   List<String> CourseName = [
@@ -148,7 +155,7 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
                       children: <Widget>[
                         FlatButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder : (context) => ProfCourseScreen(ClassProfessor[index],uid,user)));
+                            Navigator.push(context, MaterialPageRoute(builder : (context) => ProfCourseScreen(ClassProfessor[index],uid,user,email)));
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

@@ -1,4 +1,5 @@
 
+import 'package:attendo/models/user.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
@@ -8,27 +9,35 @@ import 'dart:math';
 
 class DatewiseClassDeets extends StatefulWidget {
   String lecDate;
+  String email;
+  userinfo user;
   int TotAttended, TotStudents;
-  DatewiseClassDeets(tot_attended, total, date)
+  DatewiseClassDeets(tot_attended, total, date,String email,userinfo user)
   {
     TotAttended = tot_attended;
     TotStudents = total;
     lecDate = date;
+    this.email = email;
+    this.user = user;
   }
 
   @override
-  _DatewiseClassDeetsState createState() => _DatewiseClassDeetsState(TotAttended, TotStudents, lecDate);
+  _DatewiseClassDeetsState createState() => _DatewiseClassDeetsState(TotAttended, TotStudents, lecDate,email,user);
 }
 
 class _DatewiseClassDeetsState extends State<DatewiseClassDeets> {
 
   String lecDate;
+  String email;
+  userinfo user;
   int TotAttended, TotStudents;
-  _DatewiseClassDeetsState(tot_attended, total, date)
+  _DatewiseClassDeetsState(tot_attended, total, date,String email,userinfo info)
   {
     TotAttended = tot_attended;
     TotStudents = total;
     lecDate = date;
+    this.email = email;
+    user = info;
   }
 
   @override
@@ -44,9 +53,8 @@ class _DatewiseClassDeetsState extends State<DatewiseClassDeets> {
     child: ShowdataProfCourse(TotAttended, TotStudents),
     ),
     drawer: account_drawer(
-    Name: "Angad Kambli" + ", " + "19114041",
-    //Angad kambli ke jagah naam aur 1911.. ke jagah uid aayega
-    Email: "kambli_a@yabadabadooooooooo.com",
+    Name: user.getname() + ", " + user.getenrollno(),
+    Email: email,
     ImageURL: "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
       ),
     );

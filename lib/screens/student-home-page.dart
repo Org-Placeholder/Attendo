@@ -13,21 +13,25 @@ import 'package:attendo/screens/student-course-details.dart';
 class CoursesforStudents extends StatefulWidget {
   String uid;
   userinfo user;
-  CoursesforStudents(String temp,userinfo info) {
+  String email;
+  CoursesforStudents(String temp,userinfo info,String email) {
     uid = temp;
     user = info;
+    this.email = email;
   }
   @override
-  _CoursesforStudentsState createState() => _CoursesforStudentsState(uid,user);
+  _CoursesforStudentsState createState() => _CoursesforStudentsState(uid,user,email);
 }
 
 class _CoursesforStudentsState extends State<CoursesforStudents> with SingleTickerProviderStateMixin {
   TabController controller;
   String uid;
+  String email;
   userinfo user;
-  _CoursesforStudentsState(String temp,userinfo info) {
+  _CoursesforStudentsState(String temp,userinfo info,String email) {
     uid = temp;
     user = info;
+    this.email = email;
   }
   @override
   void initState(){
@@ -45,12 +49,12 @@ class _CoursesforStudentsState extends State<CoursesforStudents> with SingleTick
       body:  TabBarView(
         controller: controller,
         children: <Widget>[
-          BuildStudentCourseCards(uid,user),
+          BuildStudentCourseCards(uid,user,email),
         ],
       ),
       drawer: account_drawer(
-        Name: "Angad Kambli" +", " + "19114041" ,//Angad kambli ke jagah naam aur 1911.. ke jagah uid aayega
-        Email: "kambli_a@yabadabadooooooooo.com",
+        Name: user.getname() +", " + user.getenrollno() ,
+        Email: email,
         ImageURL: "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
       ),
     );
@@ -59,20 +63,24 @@ class _CoursesforStudentsState extends State<CoursesforStudents> with SingleTick
 class BuildStudentCourseCards extends StatefulWidget {
   String uid;
   userinfo user;
-  BuildStudentCourseCards(String temp,userinfo info) {
-  uid = temp;
-  user = info;
+  String email;
+  BuildStudentCourseCards(String temp,userinfo info,String email) {
+    uid = temp;
+    user = info;
+    this.email = email;
   }
   @override
-  _BuildStudentCourseCardsState createState() => _BuildStudentCourseCardsState(uid,user);
+  _BuildStudentCourseCardsState createState() => _BuildStudentCourseCardsState(uid,user,email);
 }
 
 class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
   String uid;
   userinfo user;
-  _BuildStudentCourseCardsState(String temp,userinfo info) {
-  uid = temp;
-  user = info;
+  String email;
+  _BuildStudentCourseCardsState(String temp,userinfo info,String email) {
+    uid = temp;
+    user = info;
+    this.email = email;
   }
   DatabaseService Service =new DatabaseService();
   var ClassStudent = [];
@@ -128,7 +136,7 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                       children: <Widget>[
                       FlatButton(
                         onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => StudentCourseDetails(ClassStudent[index],user)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => StudentCourseDetails(ClassStudent[index],user,email)));
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

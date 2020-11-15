@@ -11,29 +11,32 @@ import 'package:flutter/material.dart';
 import 'package:attendo/screens/prof-course-datewise.dart';
 
 class ProfCourseScreen extends StatefulWidget {
-  String course_code,uid;
+  String course_code,uid,email;
   userinfo user;
-  ProfCourseScreen(String code, String temp,userinfo info)
+  ProfCourseScreen(String code, String temp,userinfo info,String email)
   {
     course_code = code;
     uid = temp;
     user = info;
+    this.email = email;
   }
 
   @override
-  _ProfCourseScreenState createState() => _ProfCourseScreenState(course_code,uid,user);
+  _ProfCourseScreenState createState() => _ProfCourseScreenState(course_code,uid,user,email);
 }
 
 class _ProfCourseScreenState extends State<ProfCourseScreen> {
   int tab = 0;
   String course_code;
   String uid;
+  String email;
   userinfo user;
-  _ProfCourseScreenState(String code,String temp,userinfo info)
+  _ProfCourseScreenState(String code,String temp,userinfo info,String email)
   {
     course_code = code;
     uid = temp;
     user = info;
+    this.email = email;
   }
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
     {
       color1 = PrimaryColor;
       color2 = SecondaryColor;
-      tab_child = prof_lectures(course_code);
+      tab_child = prof_lectures(course_code,email,user);
 
     }
     else
@@ -65,7 +68,7 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
       ),
       drawer: account_drawer(
       Name: user.getname()+", " + user.getenrollno(),//Angad kambli ke jagah naam aur 1911.. ke jagah uid aayega
-      Email: "kambli_a@yabadabadooooooooo.com",
+      Email: email,
       ImageURL: "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
 
       ),
@@ -73,7 +76,7 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
       elevation: 2.0,
       onPressed: () async {
       //Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceStudents(courseName: CourseName[index],)));
-        Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceProfessor(courseCode: course_code,)));
+        Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceProfessor(courseCode: course_code,email: email,user:user)));
 
       },
         backgroundColor: PrimaryColor,
@@ -133,13 +136,16 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
 
 class prof_lectures extends StatefulWidget {
   String course_code;
-
-  prof_lectures(String temp) {
+  String email;
+  userinfo user;
+  prof_lectures(String temp,String email,userinfo info) {
     course_code = temp;
+    user = info;
+    this.email = email;
   }
 
   @override
-  _prof_lecturesState createState() => _prof_lecturesState(course_code);
+  _prof_lecturesState createState() => _prof_lecturesState(course_code,email,user);
 }
 
 class _prof_lecturesState extends State<prof_lectures> {
@@ -147,13 +153,17 @@ class _prof_lecturesState extends State<prof_lectures> {
   var Enrollment;
   List<String> Dates;
   String course_code;
+  String email;
+  userinfo user;
   Future<void> result;
-  _prof_lecturesState(String temp){
+  _prof_lecturesState(String temp,String email,userinfo info){
     course_code = temp;
     Enrollment = [];
     Dates = [];
     num_attended = [];
     result = initialize_lists();
+    this.email = email;
+    user = info;
   }
   @override
   var ImageURL = [
@@ -196,7 +206,7 @@ class _prof_lecturesState extends State<prof_lectures> {
                     itemBuilder: (BuildContext context, int index) {
                   return new GestureDetector(
                     onTap: () {
-                      Navigator.push((context), MaterialPageRoute(builder: (context) => DatewiseClassDeets(num_attended[index], Enrollment.length, Dates[index])));
+                      Navigator.push((context), MaterialPageRoute(builder: (context) => DatewiseClassDeets(num_attended[index], Enrollment.length, Dates[index],email,user)));
                     },
                     child: Container(
                       padding: EdgeInsets.only(left: 15.0 , right: 15.0),
@@ -205,7 +215,7 @@ class _prof_lecturesState extends State<prof_lectures> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children : <Widget>[
                             Container(
-                              child: Text(Dates[index] , style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                              child: Text("Lecture ${index+1}: "+Dates[index].split('.')[0] , style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                             ),
                           ]
                       ),
