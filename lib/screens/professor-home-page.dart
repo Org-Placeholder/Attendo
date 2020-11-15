@@ -1,3 +1,4 @@
+import 'package:attendo/models/user.dart';
 import 'package:attendo/screens/add-course-dialogbox.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
 import 'package:attendo/screens/professor-course-page.dart';
@@ -10,17 +11,21 @@ import 'package:flutter/material.dart';
 import 'package:attendo/screens/professor-take-attendance.dart';
 class ShowCoursesProfessor extends StatefulWidget {
   String uid;
-  ShowCoursesProfessor(String temp) {
+  userinfo user;
+  ShowCoursesProfessor(String temp,userinfo info) {
     uid = temp;
+    user = info;
   }
   @override
-  _ShowCoursesProfessorState createState() => _ShowCoursesProfessorState(uid);
+  _ShowCoursesProfessorState createState() => _ShowCoursesProfessorState(uid,user);
 }
 
 class _ShowCoursesProfessorState extends State<ShowCoursesProfessor> with SingleTickerProviderStateMixin {
   String uid;
-  _ShowCoursesProfessorState(String temp) {
+  userinfo user;
+  _ShowCoursesProfessorState(String temp,userinfo info) {
     uid = temp;
+    user = info;
   }
   TabController controller;
   @override
@@ -37,7 +42,7 @@ class _ShowCoursesProfessorState extends State<ShowCoursesProfessor> with Single
         title: Text("Your Courses"),
       ),
       drawer: account_drawer(
-        Name: "Sandeep Kumar",
+        Name: user.getname()+", " + user.getenrollno(),
         Email: "sandeep.garg@cs.iitr.ac.in",
         ImageURL: "https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
       ),
@@ -45,7 +50,7 @@ class _ShowCoursesProfessorState extends State<ShowCoursesProfessor> with Single
       body:  TabBarView(
         controller: controller,
         children: <Widget>[
-          ShowCardsProfessor(uid),
+          ShowCardsProfessor(uid,user),
         ],
       ),
     );
@@ -56,26 +61,27 @@ class _ShowCoursesProfessorState extends State<ShowCoursesProfessor> with Single
 
 class ShowCardsProfessor extends StatefulWidget {
   String uid;
-  ShowCardsProfessor(String temp) {
+  userinfo user;
+  ShowCardsProfessor(String temp,userinfo info) {
     uid = temp;
+    user = info;
   }
   @override
-  _ShowCardsProfessor createState() => _ShowCardsProfessor(uid);
+  _ShowCardsProfessor createState() => _ShowCardsProfessor(uid,user);
 }
 
 class _ShowCardsProfessor extends State<ShowCardsProfessor> {
   String uid;
-  _ShowCardsProfessor(String temp) {
+  userinfo user;
+  _ShowCardsProfessor(String temp,userinfo info) {
     uid = temp;
+    user = info;
   }
   DatabaseService Service =new DatabaseService();
-  var ProfName  = [
-    //'Sandeep Kumar' , 'Balasubramanian Raman' , 'Sudeep Roy' , 'Subudhi Sudhakar' , 'Sateesh Kumar' , 'Falguni Pathnaik'
-  ];
-  var CourseName = [
+  List<String> CourseName = [
     //'Object Oriented Design and Analysis' ,'Data Structures and Laboratory' , 'Computer Architecture' , 'Signals and Systems' , 'ThermoDynamics' , 'Economics'
   ];
-  var ImageURL = [
+  List<String> ImageURL = [
     /*"https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
     "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
     "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
@@ -83,23 +89,21 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
     "https://picsum.photos/id/237/200/300",
     "https://picsum.photos/id/237/200/300"*/
   ];
-  var ClassProfessor = [
+  List<String> ClassProfessor = [
     //'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'
   ];
-  void getcourses() async{
-    var profname_temp=[],courseName_temp=[],imageurl_temp=[],classprof_temp=[];
+  void getcourses(String profname) async{
+    var courseName_temp=[],imageurl_temp=[],classprof_temp=[];
     var result=[];
-    result=await Service.getProfessorCourses("Subu");
+    result=await Service.getProfessorCourses("profname");
     print('kuch to aya');
     for(int i=0;i<result.length;i++)
     {
-      profname_temp.add(result[i].get("Prof_name"));
       courseName_temp.add(result[i].get("Course_Name"));
       imageurl_temp.add("https://picsum.photos/id/237/200/300");
       classprof_temp.add(result[i].get("Course_Code"));
     }
     setState(() {
-      ProfName=profname_temp;
       CourseName=courseName_temp;
       ImageURL=imageurl_temp;
       ClassProfessor=classprof_temp;
@@ -111,14 +115,14 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
     final course_name_controller = TextEditingController();
     final course_code_controller = TextEditingController();
     final course_image_controller = TextEditingController();
-    if(ProfName.length==0) {
-      getcourses();
+    if(CourseName.length==0) {
+      getcourses(user.getname());
     }
     return Scaffold(
       backgroundColor:PrimaryColor,
       body :
       ListView.builder(
-        itemCount: ProfName.length,
+        itemCount: CourseName.length,
         itemBuilder: (BuildContext context, int index) =>
             SingleChildScrollView(
               child: Container (
@@ -138,7 +142,7 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
                       children: <Widget>[
                         FlatButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder : (context) => ProfCourseScreen(ClassProfessor[index],uid)));
+                            Navigator.push(context, MaterialPageRoute(builder : (context) => ProfCourseScreen(ClassProfessor[index],uid,user)));
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

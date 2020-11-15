@@ -1,4 +1,5 @@
 
+import 'package:attendo/models/user.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
 import 'package:attendo/screens/professor-take-attendance.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,24 +10,28 @@ import 'package:attendo/screens/prof-course-datewise.dart';
 
 class ProfCourseScreen extends StatefulWidget {
   String course_code,uid;
-  ProfCourseScreen(String code, String temp)
+  userinfo user;
+  ProfCourseScreen(String code, String temp,userinfo info)
   {
     course_code = code;
     uid = temp;
+    user = info;
   }
 
   @override
-  _ProfCourseScreenState createState() => _ProfCourseScreenState(course_code,uid);
+  _ProfCourseScreenState createState() => _ProfCourseScreenState(course_code,uid,user);
 }
 
 class _ProfCourseScreenState extends State<ProfCourseScreen> {
   int tab = 0;
   String course_code;
   String uid;
-  _ProfCourseScreenState(String code,temp)
+  userinfo user;
+  _ProfCourseScreenState(String code,String temp,userinfo info)
   {
     course_code = code;
     uid = temp;
+    user = info;
   }
   @override
   Widget build(BuildContext context) {
@@ -56,7 +61,7 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
       title: Text(course_code),
       ),
       drawer: account_drawer(
-      Name: "Angad Kambli" +", " + "19114041" ,//Angad kambli ke jagah naam aur 1911.. ke jagah uid aayega
+      Name: user.getname()+", " + user.getenrollno(),//Angad kambli ke jagah naam aur 1911.. ke jagah uid aayega
       Email: "kambli_a@yabadabadooooooooo.com",
       ImageURL: "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
 
