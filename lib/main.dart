@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      // home: AuthScreen(),
-      // home: ShowCoursesProfessor(),
-       home: ProfCourseScreen(),
+       home: AuthScreen(),
+      //home: ShowCoursesProfessor(),
+      // home: ProfCourseScreen(),
       //home: MarkAttendanceProfessor(),
       //home: NetScreen(),
       debugShowCheckedModeBanner: false,

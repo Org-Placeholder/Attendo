@@ -120,6 +120,28 @@ class _ShowdataProfCourseState extends State<ShowdataProfCourse> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(left: 10),
+                child: Text("Total Class Attendance ", style: TextStyle(fontSize: 20 , fontWeight: FontWeight.bold, ),),
+              )
+            ],
+          ),
+        ),
+        Container(
+          height: 24,
+          child: Stack(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text("${TotAttended}" , style: TextStyle(fontSize: 18),),
+              )
+            ],
+          ),
+        ),
+        Container(
+          height: 24,
+          child: Stack(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
                 child: Text("Total Students", style: TextStyle(fontSize: 20 , fontWeight: FontWeight.bold),),
               )
             ],
@@ -137,28 +159,7 @@ class _ShowdataProfCourseState extends State<ShowdataProfCourse> {
           ),
         ),
 
-        Container(
-          height: 24,
-          child: Stack(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Text("Total Class Attendance ", style: TextStyle(fontSize: 20 , fontWeight: FontWeight.bold, ),),
-                )
-            ],
-          ),
-        ),
-        Container(
-          height: 24,
-          child: Stack(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Text("${TotAttended}" , style: TextStyle(fontSize: 18),),
-              )
-            ],
-          ),
-        ),
+
       ],
     );
   }
