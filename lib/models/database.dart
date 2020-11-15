@@ -138,30 +138,37 @@ class DatabaseService{
 
   // function which takes coursecode,date and array of enrollno and add the attendance details in db
 
-  Future addAttendance(String date,String courseCode,List enroll) async {
-    var docid;
-    await CourseCollection
-        .where("Course_Code",isEqualTo: courseCode)
-        .get()
-        .then((QuerySnapshot querySnapshot) => {
-      querySnapshot.docs.forEach((doc) {
-        docid=doc.id;
-      })
-    });
-    var enrollist=[];
-    enrollist=await getenrollno(courseCode);
-    Map<String,bool> mp=new Map();
-    for(int i=0;i<enroll.length;i++)
-       mp[enroll[i]]=true;
-    for(int i=0;i<enrollist.length;i++)
-       if(mp.containsKey(enrollist[i])==false)
+  Future<bool> addAttendance(String date,String courseCode,List enroll) async {
+    try {
+      var docid;
+      await CourseCollection
+          .where("Course_Code",isEqualTo: courseCode)
+          .get()
+          .then((QuerySnapshot querySnapshot) => {
+        querySnapshot.docs.forEach((doc) {
+          docid=doc.id;
+        })
+      });
+      var enrollist=[];
+      enrollist=await getenrollno(courseCode);
+      Map<String,bool> mp=new Map();
+      for(int i=0;i<enroll.length;i++)
+        mp[enroll[i]]=true;
+      for(int i=0;i<enrollist.length;i++)
+        if(mp.containsKey(enrollist[i])==false)
           mp[enrollist[i]]=false;
 
-   var ref= await CourseCollection.doc(docid).collection("Class");
-   DocumentReference docref=await ref.add({"Date":date});
-   for(MapEntry e in mp.entries){
-     docref.update({e.key:e.value});
-   }
+      var ref= await CourseCollection.doc(docid).collection("Class");
+      DocumentReference docref=await ref.add({"Date":date});
+      for(MapEntry e in mp.entries){
+        docref.update({e.key:e.value});
+      }
+      return true;
+    }
+    catch(e){
+      print("error");
+      return false;
+    }
   }
 
 }

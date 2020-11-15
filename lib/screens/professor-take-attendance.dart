@@ -4,7 +4,7 @@ import 'package:attendo/screens/prof-student-common-drawer.dart';
 import 'package:attendo/screens/success-dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:attendo/models/database.dart';
 import '../models/database.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
@@ -98,14 +98,17 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
     }
 
     //perform upload @Chirag code goes here
-
-    bool upload_succesfull = true;
-    if(upload_succesfull)
+    DatabaseService service = new DatabaseService();
+    String date = new DateTime.now().toString();
+    bool upload_successfull = await service.addAttendance(date, course_code, Enrollment);
+    if(upload_successfull)
       {
         showAttendanceMarkedSuccess.ConfirmDialog(context, 'Marked!', course_code );
       }
-
-
+    else{
+      //add dialogue box
+      print("Failed to upload attendance");
+    }
   }
   void getStudents() async{
     //Need to get courseCode
