@@ -1,4 +1,4 @@
-import 'package:attendo/firebase/database.dart';
+import 'package:attendo/models/database.dart';
 import 'package:attendo/networking/networkservicediscovery.dart';
 import 'package:attendo/networking/socket.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
@@ -49,6 +49,7 @@ class BuildStudentCourseCards extends StatefulWidget {
 }
 
 class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
+  DatabaseService Service =new DatabaseService();
   var ClassStudent = [
     //'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'
   ];
@@ -68,7 +69,7 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
   );
  void getcourses() async{
    var classStudent_temp=[],courseName_temp=[],imageurl_temp=[];
-   var result=await getStudentCourses("19114017"); // displaying courses for 19114017 for now
+   var result=await Service.getStudentCourses("19114017"); // displaying courses for 19114017 for now
    print('aya');
    for(int i=0;i<result.length;i++)
       {

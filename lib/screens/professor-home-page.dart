@@ -4,7 +4,7 @@ import 'package:attendo/screens/professor-course-page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 
-import '../firebase/database.dart';
+import '../models/database.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/professor-take-attendance.dart';
@@ -52,6 +52,7 @@ class ShowCardsProfessor extends StatefulWidget {
 }
 
 class _ShowCardsProfessor extends State<ShowCardsProfessor> {
+  DatabaseService Service =new DatabaseService();
   var ProfName  = [
     //'Sandeep Kumar' , 'Balasubramanian Raman' , 'Sudeep Roy' , 'Subudhi Sudhakar' , 'Sateesh Kumar' , 'Falguni Pathnaik'
   ];
@@ -72,7 +73,7 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
   void getcourses() async{
     var profname_temp=[],courseName_temp=[],imageurl_temp=[],classprof_temp=[];
     var result=[];
-    result=await getProfessorCourses("Subu");
+    result=await Service.getProfessorCourses("Subu");
     print('kuch to aya');
     for(int i=0;i<result.length;i++)
     {

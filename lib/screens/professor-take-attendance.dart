@@ -5,7 +5,7 @@ import 'package:attendo/screens/success-dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../firebase/database.dart';
+import '../models/database.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/modify-attendance-manually.dart';

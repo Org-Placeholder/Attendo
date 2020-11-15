@@ -1,3 +1,4 @@
+import 'package:attendo/controller/controller.dart';
 import 'package:attendo/networking/networkservicediscovery.dart';
 import 'package:attendo/networking/socket.dart';
 import 'package:attendo/screens/failure-dialog.dart';
@@ -91,26 +92,35 @@ class ShowCourseDetails extends StatefulWidget {
 }
 
 class _ShowCourseDetailsState extends State<ShowCourseDetails> {
-
+  // declaring a controller service object to fetch student course details
+  ControllerService Service = new ControllerService();
+  int TotTaken=-1,TotAttended=-1;
   String course_name;
   _ShowCourseDetailsState(String courseName)
   {
     course_name = courseName;
   }
-
+  void getDetails(String courseCode,String enrollno) async {
+    var details=[];
+    details=await Service.getClassesAttendedStudent(courseCode,enrollno);
+    setState(() {
+      TotAttended=details[0];
+      TotTaken=details[1];
+    });
+  }
   @override
   Widget build(BuildContext context) {
 
 
     //database functions go here
-
-
+    // put courseCode in place of MIN-106 and enrollno in place of 19114017
+    if(TotTaken==-1) {
+      getDetails("MIN-106", "19114017");
+    }
     int decimals = 2;
     int fac = pow(10, decimals);
     double d = 1.234567889;
     d = (d * fac).round() / fac;
-    var TotTaken = 24;
-    var TotAttended = 20;
     double ratio_attended = (TotAttended/TotTaken * fac).round() / fac;
     var bar_color;
     if(ratio_attended > 0.5) {

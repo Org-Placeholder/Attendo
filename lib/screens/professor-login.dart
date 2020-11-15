@@ -1,5 +1,5 @@
-import 'package:attendo/firebase/auth_service.dart';
-import 'package:attendo/firebase/database.dart';
+import 'package:attendo/models/auth_service.dart';
+import 'package:attendo/models/database.dart';
 import 'package:attendo/models/user.dart';
 import 'package:attendo/screens/professor-home-page.dart';
 import 'constants.dart';

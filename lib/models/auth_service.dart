@@ -1,4 +1,4 @@
-import 'package:attendo/firebase/database.dart';
+import 'package:attendo/models//database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:attendo/models/user.dart';
 class AuthService{ // class for handling all firebase related queries
