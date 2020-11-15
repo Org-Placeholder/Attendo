@@ -1,12 +1,13 @@
 import 'package:attendo/screens/add-course-dialogbox.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
+import 'package:attendo/screens/professor-course-page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 
 import '../firebase/database.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
-import 'package:attendo/screens/professor-course-page.dart';
+import 'package:attendo/screens/professor-take-attendance.dart';
 class ShowCoursesProfessor extends StatefulWidget {
   @override
   _ShowCoursesProfessorState createState() => _ShowCoursesProfessorState();
@@ -120,7 +121,7 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
                       children: <Widget>[
                         FlatButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceProfessor(courseCode: ClassProfessor[index],)));
+                            Navigator.push(context, MaterialPageRoute(builder : (context) => ProfCourseScreen(ClassProfessor[index],)));
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
