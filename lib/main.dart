@@ -1,3 +1,4 @@
+import 'package:attendo/models/user.dart';
 import 'package:attendo/screens/networking.dart';
 import 'package:attendo/screens/professor-course-page.dart';
 import 'package:attendo/screens/professor-take-attendance.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-       home: AuthScreen(),
+       home: ProfCourseScreen('MIN-106','12345678',new userinfo('Wadhwa', '12345678', 1)),
       //home: ShowCoursesProfessor(),
       // home: ProfCourseScreen(),
       // home: CoursesforStudents(),

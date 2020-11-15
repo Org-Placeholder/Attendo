@@ -38,7 +38,7 @@ class ControllerService{
 
   // function which returns number of students who attended the class on a particular date in form of a map
 
-  Future getAttendanceByDate(String courseCode) async{
+  Future<Map<String,int>> getAttendanceByDate(String courseCode) async{
     var docsnap=[];
     docsnap=await Service.getSpecificCourseInfo(courseCode);
     Map<String,int> mp=new Map();

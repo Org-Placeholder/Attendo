@@ -13,7 +13,7 @@ class AuthService{ // class for handling all firebase related queries
     return _auth.authStateChanges().map((User user) => _userFromFirebase(user));
   }
   // register with email and password
-  Future registerWithEmailAndPassword(String email,String password, String enrollno, String name,int type) async
+  Future registerWithEmailAndPassword(String email,String password, String name, String enrollno,int type) async
   {
     try
     {
