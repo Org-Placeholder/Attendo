@@ -36,7 +36,7 @@ class MarkAttendanceProfessor extends StatefulWidget {
   final String courseCode;
   String email;
   userinfo user;
-  MarkAttendanceProfessor({Key key, @required this.courseCode,String email,userinfo user}) : super(key: key);
+  MarkAttendanceProfessor({Key key, @required this.courseCode,@required this.email,@required this.user}) : super(key: key);
   @override
   _MarkAttendanceProfessor createState() => _MarkAttendanceProfessor(courseCode,email,user);
 }
