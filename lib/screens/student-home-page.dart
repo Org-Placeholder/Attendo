@@ -10,12 +10,20 @@ import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/student-course-details.dart';
 class CoursesforStudents extends StatefulWidget {
+  String uid;
+  CoursesforStudents(String temp) {
+    uid = temp;
+  }
   @override
-  _CoursesforStudentsState createState() => _CoursesforStudentsState();
+  _CoursesforStudentsState createState() => _CoursesforStudentsState(uid);
 }
 
 class _CoursesforStudentsState extends State<CoursesforStudents> with SingleTickerProviderStateMixin {
   TabController controller;
+  String uid;
+  _CoursesforStudentsState(String temp) {
+    uid = temp;
+  }
   @override
   void initState(){
     super.initState();
@@ -32,7 +40,7 @@ class _CoursesforStudentsState extends State<CoursesforStudents> with SingleTick
       body:  TabBarView(
         controller: controller,
         children: <Widget>[
-          BuildStudentCourseCards(),
+          BuildStudentCourseCards(uid),
         ],
       ),
       drawer: account_drawer(
@@ -44,11 +52,19 @@ class _CoursesforStudentsState extends State<CoursesforStudents> with SingleTick
   }
 }
 class BuildStudentCourseCards extends StatefulWidget {
+  String uid;
+  BuildStudentCourseCards(String temp) {
+    uid = temp;
+  }
   @override
-  _BuildStudentCourseCardsState createState() => _BuildStudentCourseCardsState();
+  _BuildStudentCourseCardsState createState() => _BuildStudentCourseCardsState(uid);
 }
 
 class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
+  String uid;
+  _BuildStudentCourseCardsState(String temp) {
+    uid = temp;
+  }
   DatabaseService Service =new DatabaseService();
   var ClassStudent = [
     //'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'

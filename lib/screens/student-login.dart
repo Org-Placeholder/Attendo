@@ -52,7 +52,7 @@ class _BodyState extends State<Body> {
           userinfo info = await service.getUserFromUid(result.uid);
           if(info.gettype()== 2){
             print("Login Sucessful");
-            Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesforStudents()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesforStudents(result.uid)));
           }
          else{
            setState(() {

@@ -43,7 +43,7 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
     {
       color1 = SecondaryColor;
       color2 = PrimaryColor;
-      tab_child = students_attendance();
+      tab_child = students_attendance(course_code);
     }
 
     Size size = MediaQuery.of(context).size;

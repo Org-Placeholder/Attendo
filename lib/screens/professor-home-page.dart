@@ -138,7 +138,7 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
                       children: <Widget>[
                         FlatButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder : (context) => ProfCourseScreen(ClassProfessor[index],)));
+                            Navigator.push(context, MaterialPageRoute(builder : (context) => ProfCourseScreen(ClassProfessor[index],uid)));
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
