@@ -1,4 +1,5 @@
 import 'package:attendo/controller/controller.dart';
+import 'package:attendo/models/user.dart';
 import 'package:attendo/networking/networkservicediscovery.dart';
 import 'package:attendo/networking/socket.dart';
 import 'package:attendo/screens/failure-dialog.dart';
@@ -11,18 +12,22 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 class StudentCourseDetails extends StatefulWidget {
   String course_name;
-  StudentCourseDetails(String courseName)
+  userinfo user;
+  StudentCourseDetails(String courseName,userinfo info)
   {
+    user = info;
     course_name = courseName;
   }
   @override
-  _StudentCourseDetailsState createState() => _StudentCourseDetailsState(course_name);
+  _StudentCourseDetailsState createState() => _StudentCourseDetailsState(course_name,user);
 }
 
 class _StudentCourseDetailsState extends State<StudentCourseDetails>{
   String course_name;
-  _StudentCourseDetailsState(String courseName)
+  userinfo user;
+  _StudentCourseDetailsState(String courseName,userinfo info)
   {
+    user = info;
     course_name = courseName;
   }
   @override
@@ -35,7 +40,7 @@ class _StudentCourseDetailsState extends State<StudentCourseDetails>{
           title: Text(course_name),
         ),
           body:  Container(
-            child: ShowCourseDetails(course_name),
+            child: ShowCourseDetails(course_name,user),
           ),
         drawer: account_drawer(
           Name: "Angad Kambli" + ", " + "19114041",
@@ -49,7 +54,7 @@ class _StudentCourseDetailsState extends State<StudentCourseDetails>{
             //Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceStudents(courseName: CourseName[index],)));
             
             String serviceName = "_"+course_name+"._tcp";
-            String enrollment_num = '19114001';
+            String enrollment_num = user.getenrollno();
             ServiceDiscovery nsd = new ServiceDiscovery();
 
             var nsdResult = await nsd.discoverServices(serviceName);
@@ -82,13 +87,15 @@ class _StudentCourseDetailsState extends State<StudentCourseDetails>{
 class ShowCourseDetails extends StatefulWidget {
 
   String course_name;
-  ShowCourseDetails(String courseName)
+  userinfo user;
+  ShowCourseDetails(String courseName,userinfo info)
   {
+    user = info;
     course_name = courseName;
   }
 
   @override
-  _ShowCourseDetailsState createState() => _ShowCourseDetailsState(course_name);
+  _ShowCourseDetailsState createState() => _ShowCourseDetailsState(course_name,user);
 }
 
 class _ShowCourseDetailsState extends State<ShowCourseDetails> {
@@ -96,9 +103,11 @@ class _ShowCourseDetailsState extends State<ShowCourseDetails> {
   ControllerService Service = new ControllerService();
   int TotTaken=-1,TotAttended=-1;
   String course_name;
-  _ShowCourseDetailsState(String courseName)
+  userinfo user;
+  _ShowCourseDetailsState(String courseName,userinfo info)
   {
     course_name = courseName;
+    user = info;
   }
   void getDetails(String courseCode,String enrollno) async {
     var details=[];
@@ -115,7 +124,7 @@ class _ShowCourseDetailsState extends State<ShowCourseDetails> {
     //database functions go here
     // put courseCode in place of MIN-106 and enrollno in place of 19114017
     if(TotTaken==-1) {
-      getDetails("MIN-106", "19114017");
+      getDetails(course_name, user.getenrollno());
     }
     int decimals = 2;
     int fac = pow(10, decimals);
