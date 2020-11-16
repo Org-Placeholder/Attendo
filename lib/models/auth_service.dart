@@ -24,8 +24,15 @@ class AuthService{ // class for handling all firebase related queries
       return _userFromFirebase(user);
     }catch(e)
     {
-      print(e.toString());
-      return null;
+      String str=e.toString();
+      int k=0;
+      for(int i=0;i<str.length;i++)
+         if(str[i]==']'){
+           k=i+2;
+           break;
+         }
+            
+      return ')'+str.substring(k);
     }
   }
   //  sign-in with email and password
