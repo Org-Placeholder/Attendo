@@ -23,7 +23,10 @@ class account_drawer extends StatelessWidget {
                 accountName: Text(Name, textAlign: TextAlign.center,),
                 accountEmail: Text(Email, textAlign: TextAlign.center,),
                 currentAccountPicture: new CircleAvatar(
-                  backgroundImage: new NetworkImage(ImageURL),
+                  //backgroundImage: new NetworkImage(ImageURL),
+                  child: Icon(Icons.account_circle, size: 60,),
+                  backgroundColor: PrimaryColor,
+                  foregroundColor: Colors.white,
                 ),
               )
             ],

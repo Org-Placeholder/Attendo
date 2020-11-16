@@ -1,6 +1,7 @@
 import 'package:attendo/models/user.dart';
 import 'package:attendo/networking/networkservicediscovery.dart';
 import 'package:attendo/networking/socket.dart';
+import 'package:attendo/screens/failure-dialog.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
 import 'package:attendo/screens/success-dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -109,11 +110,11 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
     bool upload_successfull = await service.addAttendance(date, course_code, Enrollment);
     if(upload_successfull)
       {
-        showAttendanceMarkedSuccess.ConfirmDialog(context, 'Marked!', course_code );
+        showAttendanceUploadedSuccess.ConfirmDialog(context, "Uploaded!", course_code);
       }
     else{
       //add dialogue box
-      print("Failed to upload attendance");
+      showAttendanceUploadFailure.ConfirmDialog(context, "Not uploaded.", course_code);
     }
   }
   void getStudents() async{
