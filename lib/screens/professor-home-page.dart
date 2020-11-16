@@ -1,3 +1,4 @@
+import 'package:attendo/models/user.dart';
 import 'package:attendo/screens/add-course-dialogbox.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
 import 'package:attendo/screens/professor-course-page.dart';
@@ -9,11 +10,27 @@ import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/professor-take-attendance.dart';
 class ShowCoursesProfessor extends StatefulWidget {
+  String uid;
+  userinfo user;
+  String email;
+  ShowCoursesProfessor(String temp,userinfo info,String email) {
+    uid = temp;
+    user = info;
+    this.email = email;
+  }
   @override
-  _ShowCoursesProfessorState createState() => _ShowCoursesProfessorState();
+  _ShowCoursesProfessorState createState() => _ShowCoursesProfessorState(uid,user,email);
 }
 
 class _ShowCoursesProfessorState extends State<ShowCoursesProfessor> with SingleTickerProviderStateMixin {
+  String uid;
+  userinfo user;
+  String email;
+  _ShowCoursesProfessorState(String temp,userinfo info,String email) {
+    uid = temp;
+    user = info;
+    this.email = email;
+  }
   TabController controller;
   @override
   void initState(){
@@ -29,15 +46,15 @@ class _ShowCoursesProfessorState extends State<ShowCoursesProfessor> with Single
         title: Text("Your Courses"),
       ),
       drawer: account_drawer(
-        Name: "Sandeep Kumar",
-        Email: "sandeep.garg@cs.iitr.ac.in",
+        Name: user.getname()+", " + user.getenrollno(),
+        Email: email,
         ImageURL: "https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
       ),
 
       body:  TabBarView(
         controller: controller,
         children: <Widget>[
-          ShowCardsProfessor(),
+          ShowCardsProfessor(uid,user,email),
         ],
       ),
     );
@@ -47,19 +64,32 @@ class _ShowCoursesProfessorState extends State<ShowCoursesProfessor> with Single
 
 
 class ShowCardsProfessor extends StatefulWidget {
+  String uid;
+  userinfo user;
+  String email;
+  ShowCardsProfessor(String temp,userinfo info,String email) {
+    uid = temp;
+    user = info;
+    this.email = email;
+  }
   @override
-  _ShowCardsProfessor createState() => _ShowCardsProfessor();
+  _ShowCardsProfessor createState() => _ShowCardsProfessor(uid,user,email);
 }
 
 class _ShowCardsProfessor extends State<ShowCardsProfessor> {
+  String uid;
+  userinfo user;
+  String email;
+  _ShowCardsProfessor(String temp,userinfo info,String email) {
+    uid = temp;
+    user = info;
+    this.email = email;
+  }
   DatabaseService Service =new DatabaseService();
-  var ProfName  = [
-    //'Sandeep Kumar' , 'Balasubramanian Raman' , 'Sudeep Roy' , 'Subudhi Sudhakar' , 'Sateesh Kumar' , 'Falguni Pathnaik'
-  ];
-  var CourseName = [
+  List<String> CourseName = [
     //'Object Oriented Design and Analysis' ,'Data Structures and Laboratory' , 'Computer Architecture' , 'Signals and Systems' , 'ThermoDynamics' , 'Economics'
   ];
-  var ImageURL = [
+  List<String> ImageURL = [
     /*"https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
     "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
     "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
@@ -67,26 +97,29 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
     "https://picsum.photos/id/237/200/300",
     "https://picsum.photos/id/237/200/300"*/
   ];
-  var ClassProfessor = [
+  List<String> ClassProfessor = [
     //'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'
   ];
-  void getcourses() async{
-    var profname_temp=[],courseName_temp=[],imageurl_temp=[],classprof_temp=[];
+  void getcourses(String profname) async{
+    List<String> courseName_temp=[],imageurl_temp=[],classprof_temp=[];
     var result=[];
-    result=await Service.getProfessorCourses("Subu");
-    print('kuch to aya');
+    result=await Service.getProfessorCourses(profname);
+    print(result);
     for(int i=0;i<result.length;i++)
     {
-      profname_temp.add(result[i].get("Prof_name"));
       courseName_temp.add(result[i].get("Course_Name"));
       imageurl_temp.add("https://picsum.photos/id/237/200/300");
       classprof_temp.add(result[i].get("Course_Code"));
+      print('done');
     }
     setState(() {
-      ProfName=profname_temp;
+      print('setting state');
       CourseName=courseName_temp;
+      print('set course name');
       ImageURL=imageurl_temp;
+      print('set image url');
       ClassProfessor=classprof_temp;
+      print('set state');
     });
   }
   @override
@@ -95,14 +128,14 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
     final course_name_controller = TextEditingController();
     final course_code_controller = TextEditingController();
     final course_image_controller = TextEditingController();
-    if(ProfName.length==0) {
-      getcourses();
+    if(CourseName.length==0) {
+      getcourses(user.getname());
     }
     return Scaffold(
       backgroundColor:PrimaryColor,
       body :
       ListView.builder(
-        itemCount: ProfName.length,
+        itemCount: CourseName.length,
         itemBuilder: (BuildContext context, int index) =>
             SingleChildScrollView(
               child: Container (
@@ -122,7 +155,7 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
                       children: <Widget>[
                         FlatButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder : (context) => ProfCourseScreen(ClassProfessor[index],)));
+                            Navigator.push(context, MaterialPageRoute(builder : (context) => ProfCourseScreen(ClassProfessor[index],uid,user,email)));
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

@@ -1,4 +1,5 @@
 import 'package:attendo/models/database.dart';
+import 'package:attendo/models/user.dart';
 import 'package:attendo/networking/networkservicediscovery.dart';
 import 'package:attendo/networking/socket.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
@@ -10,12 +11,28 @@ import 'constants.dart';
 import 'package:flutter/material.dart';
 import 'package:attendo/screens/student-course-details.dart';
 class CoursesforStudents extends StatefulWidget {
+  String uid;
+  userinfo user;
+  String email;
+  CoursesforStudents(String temp,userinfo info,String email) {
+    uid = temp;
+    user = info;
+    this.email = email;
+  }
   @override
-  _CoursesforStudentsState createState() => _CoursesforStudentsState();
+  _CoursesforStudentsState createState() => _CoursesforStudentsState(uid,user,email);
 }
 
 class _CoursesforStudentsState extends State<CoursesforStudents> with SingleTickerProviderStateMixin {
   TabController controller;
+  String uid;
+  String email;
+  userinfo user;
+  _CoursesforStudentsState(String temp,userinfo info,String email) {
+    uid = temp;
+    user = info;
+    this.email = email;
+  }
   @override
   void initState(){
     super.initState();
@@ -32,47 +49,55 @@ class _CoursesforStudentsState extends State<CoursesforStudents> with SingleTick
       body:  TabBarView(
         controller: controller,
         children: <Widget>[
-          BuildStudentCourseCards(),
+          BuildStudentCourseCards(uid,user,email),
         ],
       ),
       drawer: account_drawer(
-        Name: "Angad Kambli" +", " + "19114041" ,//Angad kambli ke jagah naam aur 1911.. ke jagah uid aayega
-        Email: "kambli_a@yabadabadooooooooo.com",
+        Name: user.getname() +", " + user.getenrollno() ,
+        Email: email,
         ImageURL: "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
       ),
     );
   }
 }
 class BuildStudentCourseCards extends StatefulWidget {
+  String uid;
+  userinfo user;
+  String email;
+  BuildStudentCourseCards(String temp,userinfo info,String email) {
+    uid = temp;
+    user = info;
+    this.email = email;
+  }
   @override
-  _BuildStudentCourseCardsState createState() => _BuildStudentCourseCardsState();
+  _BuildStudentCourseCardsState createState() => _BuildStudentCourseCardsState(uid,user,email);
 }
 
 class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
+  String uid;
+  userinfo user;
+  String email;
+  _BuildStudentCourseCardsState(String temp,userinfo info,String email) {
+    uid = temp;
+    user = info;
+    this.email = email;
+  }
   DatabaseService Service =new DatabaseService();
-  var ClassStudent = [
-    //'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'
-  ];
+  var ClassStudent = [];
   var CourseName = [];
+  var ImageURL = [];
 
-  var ImageURL = [
-    //"https://picsum.photos/id/237/200/300",
-    //"https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
-    //"https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
-    //"https://picsum.photos/id/237/200/300",
-    //"https://picsum.photos/id/237/200/300",
-    //"https://picsum.photos/id/237/200/300"
-  ];
   var MoreIcon = Icon(
     Icons.more_vert,
     color: Colors.grey.shade900,
   );
  void getcourses() async{
    var classStudent_temp=[],courseName_temp=[],imageurl_temp=[];
-   var result=await Service.getStudentCourses("19114017"); // displaying courses for 19114017 for now
+   var result=await Service.getStudentCourses(user.getenrollno());
    print('aya');
    for(int i=0;i<result.length;i++)
       {
+          print(i);
           classStudent_temp.add(result[i].get("Course_Code"));
           courseName_temp.add(result[i].get("Course_Name"));
           imageurl_temp.add("https://picsum.photos/id/237/200/300");
@@ -111,7 +136,7 @@ class _BuildStudentCourseCardsState extends State<BuildStudentCourseCards>{
                       children: <Widget>[
                       FlatButton(
                         onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => StudentCourseDetails(ClassStudent[index])));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => StudentCourseDetails(ClassStudent[index],user,email)));
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

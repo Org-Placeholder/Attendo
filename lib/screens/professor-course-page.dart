@@ -1,4 +1,7 @@
 
+import 'package:attendo/controller/controller.dart';
+import 'package:attendo/models/database.dart';
+import 'package:attendo/models/user.dart';
 import 'package:attendo/screens/prof-student-common-drawer.dart';
 import 'package:attendo/screens/professor-take-attendance.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,22 +11,32 @@ import 'package:flutter/material.dart';
 import 'package:attendo/screens/prof-course-datewise.dart';
 
 class ProfCourseScreen extends StatefulWidget {
-  String course_code;
-  ProfCourseScreen(String code)
+  String course_code,uid,email;
+  userinfo user;
+  ProfCourseScreen(String code, String temp,userinfo info,String email)
   {
     course_code = code;
+    uid = temp;
+    user = info;
+    this.email = email;
   }
 
   @override
-  _ProfCourseScreenState createState() => _ProfCourseScreenState(course_code);
+  _ProfCourseScreenState createState() => _ProfCourseScreenState(course_code,uid,user,email);
 }
 
 class _ProfCourseScreenState extends State<ProfCourseScreen> {
   int tab = 0;
   String course_code;
-  _ProfCourseScreenState(String code)
+  String uid;
+  String email;
+  userinfo user;
+  _ProfCourseScreenState(String code,String temp,userinfo info,String email)
   {
     course_code = code;
+    uid = temp;
+    user = info;
+    this.email = email;
   }
   @override
   Widget build(BuildContext context) {
@@ -34,13 +47,14 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
     {
       color1 = PrimaryColor;
       color2 = SecondaryColor;
-      tab_child = prof_lectures();
+      tab_child = prof_lectures(course_code,email,user);
+
     }
     else
     {
       color1 = SecondaryColor;
       color2 = PrimaryColor;
-      tab_child = students_attendance();
+      tab_child = students_attendance(course_code);
     }
 
     Size size = MediaQuery.of(context).size;
@@ -53,8 +67,8 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
       title: Text(course_code),
       ),
       drawer: account_drawer(
-      Name: "Angad Kambli" +", " + "19114041" ,//Angad kambli ke jagah naam aur 1911.. ke jagah uid aayega
-      Email: "kambli_a@yabadabadooooooooo.com",
+      Name: user.getname()+", " + user.getenrollno(),//Angad kambli ke jagah naam aur 1911.. ke jagah uid aayega
+      Email: email,
       ImageURL: "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
 
       ),
@@ -62,7 +76,7 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
       elevation: 2.0,
       onPressed: () async {
       //Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceStudents(courseName: CourseName[index],)));
-        Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceProfessor(courseCode: course_code,)));
+        Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceProfessor(courseCode: course_code,email: email,user:user)));
 
       },
         backgroundColor: PrimaryColor,
@@ -120,7 +134,37 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
   }
 }
 
-class prof_lectures extends StatelessWidget {
+class prof_lectures extends StatefulWidget {
+  String course_code;
+  String email;
+  userinfo user;
+  prof_lectures(String temp,String email,userinfo info) {
+    course_code = temp;
+    user = info;
+    this.email = email;
+  }
+
+  @override
+  _prof_lecturesState createState() => _prof_lecturesState(course_code,email,user);
+}
+
+class _prof_lecturesState extends State<prof_lectures> {
+  var num_attended;
+  var Enrollment;
+  List<String> Dates;
+  String course_code;
+  String email;
+  userinfo user;
+  Future<void> result;
+  _prof_lecturesState(String temp,String email,userinfo info){
+    course_code = temp;
+    Enrollment = [];
+    Dates = [];
+    num_attended = [];
+    result = initialize_lists();
+    this.email = email;
+    user = info;
+  }
   @override
   var ImageURL = [
     /*"https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
@@ -130,61 +174,65 @@ class prof_lectures extends StatelessWidget {
     "https://picsum.photos/id/237/200/300",
     "https://picsum.photos/id/237/200/300"*/
   ];
-  var num_attended = [
-    10,
-    20,
-    30,
-    40,
-    50,
-    60,
-    70,
-    80,
-    90,
-    90,
-    90,
-  ];
-  var Enrollment = [
-    '19114001','19114002','19114003','19114004','19114005','19114006','19114007','19114008','19114009','19114010','19114011','19114012','19114013','19114014','19114015','19114016','19114017','19114018','19114019','19114020','19114021','19114022','19114023','19114024','19114025','19114026','19114027','19114028','19114029','19114030','19114031','19114032','19114033','19114034','19114035','19114036','19114037','19114038','19114039','19114040','19114041','19114042','19114043','19114044','19114045','19114046','19114047','19114048','19114049','19114050','19114051','19114052','19114053','19114054','19114055','19114056','19114057','19114058','19114059','19114060','19114061','19114062','19114063','19114064','19114065','19114066','19114067','19114068','19114069','19114070','19114071','19114072','19114073','19114074','19114075','19114076','19114077','19114078','19114079','19114080','19114081','19114082','19114083','19114084','19114085','19114086','19114087','19114088','19114089','19114090','19114091','19114092','19114093','19114094','19114095','19114096','19114097','19114098','19114099'
-  ];
-  var Dates = [
-    '1-1-2020 ',
-    '2-2-2020 ',
-    '3-3-2020 ',
-    '4-4-2020 ',
-    '5-5-2020 ',
-    '6-6-2020 ',
-    '7-7-2020 ',
-    '8-8-2020 ',
-    '9-9-2020 ',
-    '10-10-2020 ',
-    '11-11-2020 ',
-  ];
+
+  //Enrollment = await service.getenroll(widget.course_code);
+  Future<void> initialize_lists() async{
+    DatabaseService service = new DatabaseService();
+    Enrollment = await service.getenrollno(course_code);
+    ControllerService service_ = new ControllerService();
+    Map<String,int> mp = await service_.getAttendanceByDate(course_code);
+    for(String k in mp.keys){
+      try {
+        Dates.add(k);
+      }catch(e){
+        print(e);
+      }
+      num_attended.add(mp[k]);
+    }
+    return;
+  }
   @override
   Widget build(BuildContext context) {
     var percentcolor;
     return SingleChildScrollView(
       child: Container(
           height: MediaQuery.of(context).size.height*0.7,
-          child: ListView.builder(
-            itemCount: Dates.length,
-            itemBuilder: (BuildContext context, int index) {
-              return new GestureDetector(
-                onTap: () {
-                  Navigator.push((context), MaterialPageRoute(builder: (context) => DatewiseClassDeets(num_attended[index], Enrollment.length, Dates[index])));
-                 },
-                child: Container(
-                  padding: EdgeInsets.only(left: 15.0 , right: 15.0),
-                  height: 45,
-                  child : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children : <Widget>[
-                      Container(
-                        child: Text(Dates[index] , style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+          child:  FutureBuilder<void>(
+            future: result,
+            builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+              if(Enrollment.length > 0){
+                return ListView.builder(
+                    itemCount: Dates.length,
+                    itemBuilder: (BuildContext context, int index) {
+                  return new GestureDetector(
+                    onTap: () {
+                      Navigator.push((context), MaterialPageRoute(builder: (context) => DatewiseClassDeets(num_attended[index], Enrollment.length, Dates[index],email,user)));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15.0 , right: 15.0),
+                      height: 45,
+                      child : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children : <Widget>[
+                            Container(
+                              child: Text("Lecture ${index+1}: "+Dates[index].split('.')[0] , style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                            ),
+                          ]
                       ),
-                    ]
-                  ),
-                ),
-              );
+                    ),
+                  );
+                });
+              }
+              else if(snapshot.hasError){
+                return Text('Error,please try again later');
+              }
+              else {
+                  return SizedBox(
+                    child: CircularProgressIndicator(),
+                    width: MediaQuery.of(context).size.width*0.1,
+                    height: MediaQuery.of(context).size.width*0.1,
+                  );
+              }
             }
           )
       ),
@@ -193,6 +241,30 @@ class prof_lectures extends StatelessWidget {
 }
 
 class students_attendance extends StatelessWidget {
+  String course_code;
+  List<double> percentage = [];
+  List<String> enrollment = [];
+  Future<void> result;
+  students_attendance(String temp) {
+    course_code = temp;
+    result = initialize_lists();
+  }
+  Future<void> initialize_lists() async{
+    ControllerService service = new ControllerService();
+    Map mp = await service.getClassAttendedByStudents(course_code);
+    print(mp);
+    for(String k in  mp.keys){
+      if(k!="total") {
+        enrollment.add(k);
+        double d = 100.0;
+        if(mp["total"]==0)
+            d = 0;
+        else
+          d = (d*mp[k])/mp["total"];
+        percentage.add(d);
+      }
+    }
+  }
   var ImageURL = [
     /*"https://internet.channeli.in/media/kernel/display_pictures/2e447df4-5763-44fd-9c5a-3ec45217c76c.jpg",
     "https://avatars3.githubusercontent.com/u/54415525?s=460&u=872ad4fbf1197a4b7ccce5ab7f6a8bca52667b3c&v=4",
@@ -201,25 +273,38 @@ class students_attendance extends StatelessWidget {
     "https://picsum.photos/id/237/200/300",
     "https://picsum.photos/id/237/200/300"*/
   ];
-  var percentage = [ 10 , 20 , 30 ,50 ,30 ,20 ,15 , 20 ,70 ,90  ];
-  var Enrollment = [
-    '19114001','19114002','19114003','19114004','19114005','19114006','19114007','19114008','19114009','19114010','19114011','19114012','19114013','19114014','19114015','19114016','19114017','19114018','19114019','19114020','19114021','19114022','19114023','19114024','19114025','19114026','19114027','19114028','19114029','19114030','19114031','19114032','19114033','19114034','19114035','19114036','19114037','19114038','19114039','19114040','19114041','19114042','19114043','19114044','19114045','19114046','19114047','19114048','19114049','19114050','19114051','19114052','19114053','19114054','19114055','19114056','19114057','19114058','19114059','19114060','19114061','19114062','19114063','19114064','19114065','19114066','19114067','19114068','19114069','19114070','19114071','19114072','19114073','19114074','19114075','19114076','19114077','19114078','19114079','19114080','19114081','19114082','19114083','19114084','19114085','19114086','19114087','19114088','19114089','19114090','19114091','19114092','19114093','19114094','19114095','19114096','19114097','19114098','19114099'
-  ];
   @override
   Widget build(BuildContext context) {
     var percentcolor;
     return Container(
       height: MediaQuery.of(context).size.height*0.7,
-        child: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (BuildContext context, int index) =>
-          SingleChildScrollView(
-            child: ListTile(
-              trailing: Text("${percentage[index]}%" ,style: TextStyle(color: (percentage[index] < 50) ? Colors.red:Colors.green,fontSize: 18)),
-              title : Text("${Enrollment[index]}" , style: TextStyle(color: Colors.black , fontSize: 18 , fontWeight: FontWeight.bold),),
-           )
-        ),
+      child:FutureBuilder<void>(
+        future: result,
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+          if(percentage.length>0){
+            return ListView.builder(
+              itemCount: percentage.length,
+              itemBuilder: (BuildContext context, int index) =>
+                SingleChildScrollView(
+                  child: ListTile(
+                  trailing: Text("${percentage[index]}%" ,style: TextStyle(color: (percentage[index] < 50) ? Colors.red:Colors.green,fontSize: 18)),
+                  title : Text("${enrollment[index]}" , style: TextStyle(color: Colors.black , fontSize: 18 , fontWeight: FontWeight.bold),),
+                )
+              ),
+            );
+          }
+          else if(snapshot.hasError){
+            return Text('Error,please try again later');
+          }
+          else{
+            return SizedBox(
+              child: CircularProgressIndicator(),
+              width: MediaQuery.of(context).size.width*0.1,
+              height: MediaQuery.of(context).size.width*0.1,
+            );
+          }
+        }
       )
-      );
+    );
   }
 }

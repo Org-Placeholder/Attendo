@@ -1,3 +1,4 @@
+import 'package:attendo/models/user.dart';
 import 'package:attendo/screens/networking.dart';
 import 'package:attendo/screens/professor-course-page.dart';
 import 'package:attendo/screens/professor-take-attendance.dart';
