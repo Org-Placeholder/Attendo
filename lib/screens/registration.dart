@@ -71,10 +71,10 @@ class _BodyState extends State<Body> {
       if(!iserror) // if no error found
           {
         dynamic result = await _auth.registerWithEmailAndPassword(email_controller.text, password_controller.text,full_name_controller.text,id_controller.text, _value);
-        if(result == null)
+        if(result[0]==')')
         {
           setState(() {
-            error_msg="Registration was not sucessful :(";
+            error_msg=result.substring(1)+" :(";
           });
         }
         else{

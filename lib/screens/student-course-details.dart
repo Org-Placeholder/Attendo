@@ -133,7 +133,11 @@ class _ShowCourseDetailsState extends State<ShowCourseDetails> {
     int fac = pow(10, decimals);
     double d = 1.234567889;
     d = (d * fac).round() / fac;
-    double ratio_attended = (TotAttended/TotTaken * fac).round() / fac;
+    double ratio_attended;
+    if(TotTaken==0)
+       ratio_attended=0;
+    else
+      ratio_attended = (TotAttended/TotTaken * fac).round() / fac;
     var bar_color;
     if(ratio_attended > 0.5) {
         bar_color = Colors.green;
