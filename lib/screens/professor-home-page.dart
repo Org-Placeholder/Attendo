@@ -97,6 +97,18 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
     "https://picsum.photos/id/237/200/300",
     "https://picsum.photos/id/237/200/300"*/
   ];
+  var ImageRepo = [
+    "https://raw.githubusercontent.com/Attendo-App/CourseImages/master/course-img1.png",
+    "https://raw.githubusercontent.com/Attendo-App/CourseImages/master/course-img2.png",
+    "https://raw.githubusercontent.com/Attendo-App/CourseImages/master/course-img3.png",
+    "https://raw.githubusercontent.com/Attendo-App/CourseImages/master/course-img4.png",
+    "https://raw.githubusercontent.com/Attendo-App/CourseImages/master/course-img5.png",
+    "https://raw.githubusercontent.com/Attendo-App/CourseImages/master/course-img6.png",
+    "https://raw.githubusercontent.com/Attendo-App/CourseImages/master/course-img7.png",
+    "https://raw.githubusercontent.com/Attendo-App/CourseImages/master/course-img8.png",
+    "https://raw.githubusercontent.com/Attendo-App/CourseImages/master/course-img9.png",
+    "https://raw.githubusercontent.com/Attendo-App/CourseImages/master/course-img10.png",
+  ];
   List<String> ClassProfessor = [
     //'CSN-261', 'CSN-291' , 'CSN-221' , 'ECN-203' , 'MIN-106' , 'HSN-002'
   ];
@@ -108,8 +120,11 @@ class _ShowCardsProfessor extends State<ShowCardsProfessor> {
     for(int i=0;i<result.length;i++)
     {
       courseName_temp.add(result[i].get("Course_Name"));
-      imageurl_temp.add("https://picsum.photos/id/237/200/300");
       classprof_temp.add(result[i].get("Course_Code"));
+      String courseCodeTemp = result[i].get("Course_Code");
+      int x = int.parse(courseCodeTemp[courseCodeTemp.length-1] + courseCodeTemp[courseCodeTemp.length-2]);
+      x = x % ImageRepo.length;
+      imageurl_temp.add(ImageRepo[x]);
       print('done');
     }
     setState(() {
