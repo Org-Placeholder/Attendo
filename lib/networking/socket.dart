@@ -14,6 +14,13 @@ class Server
     startServer(port);
   }
 
+  //clears arrays
+  void clearArrays()
+  {
+        students = [];
+        ipAddresses = [];
+  }
+
   //this will initialize the server
   void startServer(int port) async
   {

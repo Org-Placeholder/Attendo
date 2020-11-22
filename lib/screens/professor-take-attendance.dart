@@ -86,7 +86,7 @@ class ShowMarkedStudents extends StatefulWidget {
 class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
   bool set_state = true;
   List<String> Enrollment = [];
-
+  Service network_service;
   String course_code;
   _ShowMarkedStudentsState(String code)
   {
@@ -105,6 +105,7 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
       });
     }
 
+    await network_service.deregisterService();
     DatabaseService service = new DatabaseService();
     String date = new DateTime.now().toString();
     bool upload_successfull = await service.addAttendance(date, course_code, Enrollment);
@@ -119,10 +120,11 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
   }
   void getStudents() async{
     //Need to get courseCode
-    Service service = new Service();
+    network_service = new Service();
     var service_name = "_"+course_code+"._tcp";
-    await service.registerService(service_name);
-    var server = Server(service.port);
+    await network_service.registerService(service_name);
+    var server = Server(network_service.port);
+    server.clearArrays();
     await updateStudents(server);
     server.closeServer();
   }
