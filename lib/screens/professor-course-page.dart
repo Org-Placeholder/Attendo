@@ -77,7 +77,6 @@ class _ProfCourseScreenState extends State<ProfCourseScreen> {
       onPressed: () async {
       //Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceStudents(courseName: CourseName[index],)));
         Navigator.push(context, MaterialPageRoute(builder : (context) => MarkAttendanceProfessor(courseCode: course_code,email: email,user:user)));
-
       },
         backgroundColor: PrimaryColor,
         label: Text("Take Attendance"),

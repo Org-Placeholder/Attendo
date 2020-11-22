@@ -117,6 +117,7 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
       //add dialogue box
       showAttendanceUploadFailure.ConfirmDialog(context, "Not uploaded.", course_code);
     }
+
   }
   void getStudents() async{
     //Need to get courseCode
@@ -126,8 +127,12 @@ class _ShowMarkedStudentsState extends State<ShowMarkedStudents> {
     var server = Server(network_service.port);
     server.clearArrays();
     await updateStudents(server);
+    server.clearArrays();
     server.closeServer();
   }
+
+
+
   @override
   Widget build(BuildContext context) {
     /*if(Enrollment.length==0) {
